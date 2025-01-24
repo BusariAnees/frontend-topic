@@ -37,4 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loadPage("components/auth/signup.html")
         }
     })
+
+  
+
 });

@@ -91,6 +91,10 @@ article{
     border-bottom: none;
 }
 
-.article-div{
-    
+.content-section {
+    display: none;
+}
+
+.content-section.active{
+    display: block;
 }
