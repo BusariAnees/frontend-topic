@@ -1,21 +1,27 @@
-<link rel="stylesheet" href="/assets/css/auth.css">
+
+<script src="assets/js/main.js" defer></script>
 <div class="login-container">
-    <h1>Sign up</h1>
-    <form id="signInForm">
+    <h1>Sign Up</h1>
+    <form id="signUpForm">
         <div class="input-group">
-            <div class="label">
-                <label for="email">Email:</label>
-            </div>
-            <input type="email" id="email" name="email" required placeholder="example@abc.com">
+          <div class="label">
+            <label for="email">Email:</label>
+          </div>
+          <input type="email" id="email" name="email" required placeholder="example@abc.com">
         </div>
         <div class="input-group">
-            <div class="label">
-               <label for="password">Password:</label>
-            </div>
-            <input type="password" id="password" name="password" required placeholder="Enter your password">
+          <div class="label">
+            <label for="password">Password:</label>
+          </div>
+          <input type="password" id="password" name="password" required placeholder="Enter your password">
         </div>
-        <button type="submit">Sign In</button>
+        <button type="submit">Sign Up</button>
         <p>Already have an account? <a href="#" id="login">Login here</a></p>
-    </form>
+      </form>
+      
+      <p id="error-message" style="color:rgb(238, 94, 94)"></p>
+      
 </div>
 <p id="error-message" style="color:rgb(238, 94, 94)"></p>
+
+
