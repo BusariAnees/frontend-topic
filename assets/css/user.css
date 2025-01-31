@@ -1,7 +1,8 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    margin: 0;
+   height: 100%;
+   display: block;
 }
 
 main{
@@ -48,6 +49,20 @@ main{
    
 }
 
+.welcome-ul {
+    margin: auto;
+}
+
+#my-name {
+    margin-top: 14rem
+}
+
+#the-topics{
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
 .section-ul {
     width: 15%;
     border-right: 1px solid black;
@@ -63,7 +78,6 @@ article{
     border: 1px solid #0000002e;
     border-radius: 5px;
     width: 40rem;
-    margin: auto;
     height: 30rem;
     padding: 2rem;
     box-shadow: 2px 2px 4px #0000009e;
@@ -80,7 +94,7 @@ article{
     border: 1px solid #0000005c;
     border-radius: 5px;
     padding: 0.6rem;
-    height: 1.5rem;
+    height: 2.8rem;
     justify-content: space-between;
 }
 .article-date {
@@ -89,6 +103,11 @@ article{
 
 #logout-div {
     border-bottom: none;
+}
+
+p {
+    margin-top: 0;
+    font-size: 0.9rem;
 }
 
 .content-section {

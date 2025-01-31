@@ -6,6 +6,12 @@
         <form id="signInForm">
             <div class="input-group">
                 <div class="label">
+                    <label for="name">Full Name:</label>
+                </div>
+                <input type="text" id="name" name="fullname" required placeholder="abc">
+            </div>
+            <div class="input-group">
+                <div class="label">
                     <label for="email">Email:</label>
                 </div>
                 <input type="email" id="email" name="email" required placeholder="example@abc.com">
@@ -19,8 +25,9 @@
             <button type="submit">Login</button>
             <p>Don't have an account? <a href="#" id="signup">Sign up</a></p>
         </form>
+        <p id="error-message" style="color:rgb(238, 94, 94)"></p>
     </div>
-<p id="error-message" style="color:rgb(238, 94, 94)"></p>
+
 </main>
    
 
