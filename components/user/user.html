@@ -24,7 +24,10 @@
 <div class="section-div" id="logout-div">
     <i class="fa-solid fa-hand-point-right"></i>  <a class="nav-link" href="#" data-target="logout-section">Logout</a> 
 </div>
-<p id="my-name"></p>
+<div class="name-edit">
+    <p id="my-name"></p> <a class="nav-link" data-target="edit-section" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
+</div>
+
         </ul>
         <ul class="welcome-ul">
 
@@ -60,6 +63,21 @@
                     <div class="article-date">21/01/2024</div>
                 </li>
             </ul>
+         </article>
+         <article id="edit-section" class="content-section">
+            <form id="container-form" >
+                <label for="name">Full Name</label>
+                <input type="text" id="name-editing" name="name" placeholder="Enter your full name" required>
+    
+                <label for="email">Email</label>
+                <input type="email" id="email-editing" name="email" placeholder="Enter your email" required  disabled>
+    
+                <label for="topics">Subscribed Topics</label>
+                <input  type="number" id="topic" name="topics" rows="3" placeholder="Your Subscribed Topics" disabled></input>
+    
+                <button id="submit-edit" type="submit">Save Changes</button>
+                <p id="error-message" style="color:rgb(238, 94, 94)"></p>
+            </form>
          </article>
         </ul>
     </section>

@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (url.includes("user.html")) {
           initUserPage(); // Initialize user-specific scripts
+          
         }
 
         // Initialize event listeners after loading the page
@@ -99,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
       signInForm.addEventListener("submit", async (e) => {
         e.preventDefault(); // Prevent form from submitting traditionally
 
-        const fullName = document.getElementById("name").value
+       
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const errorMessage = document.getElementById("error-message");
@@ -111,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ fullName,email, password }),
+            body: JSON.stringify({ email, password }),
           });
 
           const data = await response.json();
@@ -119,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log(data);
           if (response.ok) {
             // Success: Store the token in localStorage and redirect to user page
-            const token = localStorage.setItem("authToken", data.token);
+             localStorage.setItem("authToken", data.token);
             alert("Login successful! Redirecting to your page...");
             loadPage("components/user/user.html");// Redirect to the user page
           } else {
@@ -146,7 +147,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+  //users page
   function initUserPage() {
+    displayUserData();
+    addProfileUpdateListener();
     const links = document.querySelectorAll(".nav-link");
     const sections = document.querySelectorAll(".content-section");
   
@@ -164,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         const token = localStorage.getItem('authToken');
         if (!token) return console.error("No token found.");
-  
+    
         const response = await fetch('http://localhost:5001/api/users/me', {
           method: 'GET',
           headers: {
@@ -172,9 +176,9 @@ document.addEventListener("DOMContentLoaded", function () {
             'Content-Type': 'application/json'
           }
         });
-  
+    
         if (!response.ok) throw new Error('Failed to fetch user data');
-  
+    
         const data = await response.json();
         console.log("User Data Fetched:", data);
         return data;
@@ -183,24 +187,76 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error('Error fetching user data:', error);
       }
     }
+    
     async function displayUserData() {
-      const userData = await getUserData(); // Await the promise
+      const userData = await getUserData();
         
       if (userData) {
-          document.getElementById("my-name").textContent = userData.fullName;
-          document.getElementById("name").textContent = userData.fullName.toUpperCase();
-
+        document.getElementById("my-name").textContent = userData.fullName;
+        document.getElementById("name").textContent = userData.fullName.toUpperCase();
+        document.getElementById("name-editing").value = userData.fullName;
+        document.getElementById("email-editing").value = userData.email;
+        document.getElementById("topic").value = userData.subscribedTopics;
       } else {
-          console.error("User data is null or undefined.");
+        console.error("User data is null or undefined.");
       }
-  }
-  
-  // Run when the page loads
- 
-      displayUserData();
-
+    }
+    
+    // Ensure the DOM is fully loaded before attaching event listeners
 
     
+    function addProfileUpdateListener() {
+      setTimeout(() => { // Ensures the form is loaded first
+        const container = document.getElementById("container-form");
+        if (!container) {
+          console.error("Form container not found.");
+          return;
+        }
+    
+        container.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const fullName = document.getElementById("name-editing").value;
+          const token = localStorage.getItem('authToken');
+    
+          if (!token) {
+            console.error("No token found.");
+            return;
+          }
+    
+          try {
+            const response = await fetch('http://localhost:5001/api/users/me', {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ fullName }),
+            });
+    
+            const data = await response.json();
+            console.log("Update Response:", data);
+    
+            if (response.ok) {
+              alert("Submitted successfully");
+              loadPage("components/user/user.html");
+            } else {
+              const errorMessageElement = document.getElementById("error-message");
+              if (errorMessageElement) {
+                errorMessageElement.textContent = data.message || "Failed. Please try again.";
+              }
+            }
+          } catch (error) {
+            console.error("Error updating profile:", error);
+          }
+        });
+      }, 500); // Add delay to ensure elements are loaded
+    }
+    
+
+
+
+
+
   }
   
 

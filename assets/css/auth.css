@@ -47,7 +47,8 @@ i{
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="number"] {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
