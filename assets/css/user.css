@@ -36,6 +36,10 @@ main{
     margin-bottom: 1.5rem;
 }
 
+.topic-link {
+    font-size: 0.85rem;
+    border-bottom: 1px solid #00000052;
+}
 
 .section a {
     color: black;
@@ -60,6 +64,11 @@ main{
     justify-content: space-between;
 }
 
+.topic-span {
+    display: flex;
+        /* align-items: end; */
+        justify-content: end;
+}
 
 
 #the-topics{
@@ -90,6 +99,7 @@ article{
 }
 
 .article-ul {
+    margin-block: 1.3rem;
     list-style: none;
 }
 
@@ -98,7 +108,7 @@ article{
     display: flex;
     align-items: center;
     border: 1px solid #0000005c;
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 0.6rem;
     height: 2.8rem;
     justify-content: space-between;
@@ -138,9 +148,37 @@ p {
     margin-bottom: 0.4rem;
 }
 
-.topics-type {
+#search-ul {
+    border-bottom: 1px solid #00000024;
+}
+
+
+.search-li {
+    margin-top: 1rem;
+}
+
+label {
+    font-size: 0.85rem;
+}
+
+#topics-type {
     margin: 5px;
     text-align: center;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.search-input {
+    display: flex ;
+        align-items: baseline;
+        justify-content: space-between;
+}
+
+#button-search {
+    width: 19.5%;
+    height: 100%;
+}
+
+#search-ul input {
+    width: 80%;
 }

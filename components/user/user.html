@@ -1,39 +1,48 @@
-<link rel="stylesheet" href="/assets/css/user.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/user.css" />
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  rel="stylesheet"
+/>
 <script src="/assets/js/users.js" defer></script>
 
 <main>
-    <div id="main-header"> Topic Management</div>
-    <h1 id="main-h1">Actions</h1>
-    <section class="section">
-        <ul class="section-ul"> 
-            <div class="section-div">
-                <i class="fa-solid fa-hand-point-right"></i>  <a  class="nav-link"href="#" data-target="inbox">Inbox</a> 
-            </div>
-            <!-- <div class="section-div">
+  <div id="main-header">Topic Management</div>
+  <h1 id="main-h1">Actions</h1>
+  <section class="section">
+    <ul class="section-ul">
+      <div class="section-div">
+        <i class="fa-solid fa-hand-point-right"></i>
+        <a class="nav-link" href="#" data-target="inbox">Inbox</a>
+      </div>
+      <!-- <div class="section-div">
 <i class="fa-solid fa-hand-point-right"></i><a class="nav-link" href="#" data-target="main-topic">Main</a>
             </div> -->
-            <div class="section-div">
-              
-<i class="fa-solid fa-hand-point-right"></i>  <a  class="nav-link"href="#" data-target="manage-topic">Manage Topics</a> 
-            </div>
+      <div class="section-div">
+        <i class="fa-solid fa-hand-point-right"></i>
+        <a class="nav-link" href="#" data-target="manage-topic"
+          >Manage Topics</a
+        >
+      </div>
 
-<div class="section-div">
-    <i class="fa-solid fa-hand-point-right"></i>  <a  class="nav-link" href="#" data-target="message-sub">Subscriptions</a> 
-</div>
+      <div class="section-div">
+        <i class="fa-solid fa-hand-point-right"></i>
+        <a class="nav-link" href="#" data-target="message-sub">Subscriptions</a>
+      </div>
 
-<div class="section-div" id="logout-div">
-    <i class="fa-solid fa-hand-point-right"></i>  <a class="nav-link" href="#" data-target="logout-section">Logout</a> 
-</div>
-<div class="name-edit">
-    <p id="my-name"></p> <a class="nav-link" data-target="edit-section" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
-</div>
-
-        </ul>
-        <ul class="welcome-ul">
-
-            <p id="the-topics"><span id="name"></span>'S TOPICS</p>
-        <!-- <article id="main-topic" class="content-section">  
+      <div class="section-div" id="logout-div">
+        <i class="fa-solid fa-hand-point-right"></i>
+        <a class="nav-link" href="#" data-target="logout-section">Logout</a>
+      </div>
+      <div class="name-edit">
+        <p id="my-name"></p>
+        <a class="nav-link" data-target="edit-section" href="#"
+          ><i class="fa-solid fa-pen-to-square"></i
+        ></a>
+      </div>
+    </ul>
+    <ul class="welcome-ul">
+      <p id="the-topics"><span id="name"></span>'S TOPICS</p>
+      <!-- <article id="main-topic" class="content-section">  
             <ul class="article-ul">
                 <li class="article-li">
                     <p>some topics paragraphs</p>
@@ -41,76 +50,143 @@
                 </li>
             </ul>
          </article> -->
-         <article id="manage-topic" class="content-section"> 
-          <span> <i class="fa-solid fa-arrow-right"></i> <a class="nav-link" data-target="create-topic" href="#">Create Topic</a> </span> 
-            <ul class="article-ul">
-                <li class="article-li">
-                    <p>managed topic</p>
-                    <div class="article-date">21/01/2024</div>
-                </li>
-            </ul>
-         </article>
-         <article id="message-sub" class="content-section">
-            <ul class="article-ul">
-                <li class="article-li">
-                    <p>subcriptions</p>
-                    <div class="article-date">21/01/2024</div>
-                </li>
-            </ul>
-         </article>
-         <article id="inbox" class="content-section">
-            <ul class="article-ul">
-                <li class="article-li">
-                    <p>inbox</p>
-                    <div class="article-date">21/01/2024</div>
-                </li>
-            </ul>
-         </article>
-<!-- 
+      <article id="manage-topic" class="content-section">
+        <span class="topic-span">
+          <i class="fa-solid fa-arrow-right"></i>
+          <a class="nav-link topic-link" data-target="create-topic" href="#"
+            >Create Topic</a
+          >
+        </span>
+        <ul class="article-ul">
+          <li class="article-li">
+            <p>managed topic</p>
+            <div class="article-date">21/01/2024</div>
+          </li>
+        </ul>
+      </article>
+      <article id="message-sub" class="content-section">
+        <span class="topic-span">
+          <i class="fa-solid fa-arrow-right"></i>
+          <a class="nav-link topic-link" data-target="subscribe-topic" href="#"
+            >Subscribe to Topic</a
+          >
+        </span>
+        <ul class="article-ul">
+          <li class="article-li">
+            <p>subcriptions</p>
+            <div class="article-date">21/01/2024</div>
+          </li>
+        </ul>
+      </article>
+      <article id="inbox" class="content-section">
+        <ul class="article-ul">
+          <li class="article-li">
+            <p>inbox</p>
+            <div class="article-date">21/01/2024</div>
+          </li>
+        </ul>
+      </article>
+      <!-- 
 //links to new page -->
-         <article id="edit-section" class="content-section">
-            <form id="container-form" >
-                <label for="name">Full Name</label>
-                <input type="text" id="name-editing" name="name" placeholder="Enter your full name" required>
-    
-                <label for="email">Email</label>
-                <input type="email" id="email-editing" name="email" placeholder="Enter your email" required  disabled>
-    
-                <label for="topics">Subscribed Topics</label>
-                <input  type="number" id="topic" name="topics" rows="3" placeholder="Your Subscribed Topics" disabled></input>
-    
-                <button id="submit-edit" type="submit">Save Changes</button>
-                <p id="error-message" style="color:rgb(238, 94, 94)"></p>
-            </form>
-         </article>
-         <article id="create-topic" class="content-section">
-  <form id="topicForm">
-    <div id="dropdown">
-        <p id="topics-type">Topic's Type</p>
-        <ul class="dropdown-menu" id="dropdownMenu">
-          <li><button type="button" onclick="selectOption('Private')">Private</button></li>
-          <li><button type="button" onclick="selectOption('Public')">Public</button></li>
-        </ul>
-      </div>
-  <label for="topic-name">Topic Name:</label>
-  <input type="text" id="topic-name"  required />
+      <article id="edit-section" class="content-section">
+        <form id="container-form">
+          <label for="name-editing">Full Name</label>
+          <input
+            type="text"
+            id="name-editing"
+            name="name"
+            placeholder="Enter your full name"
+            required
+          />
 
-  <label for="description">Description:</label>
-  <input type="text" id="description" />
-  <input type="hidden" id="type" value="" />
+          <label for="email-editing">Email</label>
+          <input
+            type="email"
+            id="email-editing"
+            name="email"
+            placeholder="Enter your email"
+            required
+            disabled
+          />
 
-  <div id="secretIdContainer" style="display: none;">
-    <label for="secretId">Secret ID:</label>
-    <input type="text" id="secretId" />
-  </div>
+          <label for="topic">Subscribed Topics</label>
+          <input
+            type="number"
+            id="topic"
+            name="topics"
+            rows="3"
+            placeholder="Your Subscribed Topics"
+            disabled
+          />
 
-  <button type="submit">Create Topic</button>
-</form>
+          <button id="submit-edit" type="submit">Save Changes</button>
+          <p id="error-message" style="color: rgb(238, 94, 94)"></p>
+        </form>
+      </article>
 
-<p id="responseMessage"></p>
 
-         </article>
-        </ul>
-    </section>
- 
+      <!-- the edge navigation -->
+      <article id="create-topic" class="content-section">
+        <form id="topicForm">
+          <div id="dropdown">
+            <p id="topics-type">Topic's Type</p>
+            <ul class="dropdown-menu" id="dropdownMenu">
+              <li>
+                <button type="button" onclick="selectOption('Private')">
+                  Private
+                </button>
+              </li>
+              <li>
+                <button type="button" onclick="selectOption('Public')">
+                  Public
+                </button>
+              </li>
+            </ul>
+          </div>
+          <label for="topic-name">Topic Name:</label>
+          <input type="text" id="topic-name" required />
+
+          <label for="description">Description:</label>
+          <input type="text" id="description" />
+          <input type="hidden" id="type" value="" />
+
+          <div id="secretIdContainer" style="display: none">
+            <label for="secretId">Secret ID:</label>
+            <input type="text" id="secretId" />
+          </div>
+
+          <button type="submit">Create Topic</button>
+        </form>
+
+        <p id="responseMessage"></p>
+      </article>
+
+      <article id="subscribe-topic" class="content-section">
+        <form id="topicForm">
+          <div id="dropdown">
+            <p id="topics-type">Search To Subscribe</p>
+            <ul id="search-ul" >
+              <li class="search-li">
+                <label for="secret-id">Private Topic</label>
+                <div class="search-input">
+                    <input type="text" id="secret-id" required placeholder="secretId" />
+                    <button id="button-search" type="button">Search</button>
+                </div>
+             
+                
+              </li>
+              <li>
+                <label for="topics-name">Public Topic</label>
+                <div class="search-input">
+                <input type="text" id="topic-name" required placeholder="Topic's name" />
+                <button  id="button-search" type="button">Search</button>
+            </div>
+              </li>
+            </ul>
+          </div>
+        </form>
+        
+      </article>
+    </ul>
+  </section>
 </main>
