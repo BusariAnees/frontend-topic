@@ -70,9 +70,9 @@ main{
 }
 
 .section-ul {
-    width: 15%;
+    width: 20%;
     border-right: 1px solid black;
-    padding-right: 2rem;
+    padding-right: 0.95rem;
     list-style: none;
 }
 
@@ -83,7 +83,7 @@ main{
 article{
     border: 1px solid #0000002e;
     border-radius: 5px;
-    width: 40rem;
+    width: 45rem;
     height: 30rem;
     padding: 2rem;
     box-shadow: 2px 2px 4px #0000009e;
@@ -124,15 +124,23 @@ p {
     display: block;
 }
 
-.container-form > h2 {
+.topicform > h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-.container-form > label {
+.topicform > label {
     font-weight: bold;
     display: block;
     margin-top: 10px;
 }
 
+.dropdown-menu {
+    margin-bottom: 0.4rem;
+}
 
-
+.topics-type {
+    margin: 5px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
