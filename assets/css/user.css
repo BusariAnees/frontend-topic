@@ -5,6 +5,17 @@ body {
    display: block;
 }
 
+.fade-in {
+    opacity: 1;
+    animation: fadeIn 0.7s forwards;
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
 main{
     color: #403e3e;
 }
@@ -174,11 +185,26 @@ label {
         justify-content: space-between;
 }
 
-#button-search {
+.button-search {
     width: 19.5%;
     height: 100%;
 }
 
+
+
 #search-ul input {
     width: 80%;
+}
+
+#search-results {
+    background: #cecfd1;
+    display: flex;
+    align-items: center;
+    border: 1px solid #0000005c;
+    border-radius: 2px;
+    padding: 0.6rem;
+    height: 2.8rem;
+    justify-content: space-between;
+    list-style: none;
+    margin-bottom: 0.3rem;
 }

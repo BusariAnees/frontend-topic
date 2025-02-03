@@ -103,6 +103,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const errorMessage = document.getElementById("error-message");
 
         try {
+          // Show loading screen
+          document.getElementById("loading").style.display = "block";
+        
           const response = await fetch("http://localhost:5001/api/users/login", {
             method: "POST",
             headers: {
@@ -110,19 +113,40 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify({ email, password }),
           });
-
+        
           const data = await response.json();
-
+        
           if (response.ok) {
             localStorage.setItem("authToken", data.token);
-            loadPage("components/user/user.html");
+        
+            // Fetch user data before loading the page
+            const userResponse = await fetch("http://localhost:5001/api/users/me", {
+              headers: {
+                Authorization: `Bearer ${data.token}`,
+              },
+            });
+        
+            if (userResponse.ok) {
+              const userData = await userResponse.json();
+              localStorage.setItem("userData", JSON.stringify(userData));
+        
+              // Add a slight delay for smooth transition
+              setTimeout(() => {
+                document.getElementById("loading").style.display = "none";
+                loadPage("components/user/user.html");
+              }, 500);
+            } else {
+              errorMessage.textContent = "Failed to retrieve user data.";
+              document.getElementById("loading").style.display = "none";
+            }
           } else {
             errorMessage.textContent = data.message || "Login failed. Please try again.";
           }
         } catch (error) {
-          console.error("Error during login:", error);
-          errorMessage.textContent = "An error occurred during login. Please try again.";
+          errorMessage.textContent = "An error occurred. Please try again.";
+          document.getElementById("loading").style.display = "none";
         }
+        
       });
     }
   }
