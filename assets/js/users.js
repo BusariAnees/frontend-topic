@@ -3,6 +3,7 @@ function initUserPage() {
     addProfileUpdateListener();
     initTopicForm();
     subscription ();
+    privateSubcription ();
   
     const links = document.querySelectorAll(".nav-link");
     const sections = document.querySelectorAll(".content-section");
@@ -127,7 +128,7 @@ function initUserPage() {
     
         try {
           const token = localStorage.getItem('authToken');
-          console.log(token)
+    
           if (!token) return console.error("No token found.");
     
           const response = await fetch('http://localhost:5001/api/topics/', {
@@ -175,8 +176,6 @@ function initUserPage() {
 
     async function subscription () {
       const searchButtons = document.querySelectorAll("#button-public");
-      const secretIdInput = document.getElementById("secret-id");
-      const topicNameInput = document.getElementById("topic-name");
       const searchResults = document.createElement("ul");
       searchResults.id = "search-re";
       document.getElementById("subscribe-topic").appendChild(searchResults);
@@ -193,7 +192,7 @@ function initUserPage() {
   
               try {
                 const token = localStorage.getItem('authToken');
-                console.log(token)
+               
                 if (!token) return console.error("No token found.");
 
 
@@ -232,27 +231,26 @@ function initUserPage() {
             searchResultsContainer.id = "search-results";
             document.getElementById("subscribe-topic").appendChild(searchResultsContainer);
               const li = document.createElement("li");
-              li.textContent = `${topic.name}`;
+              li.textContent = `Topic:${topic.name}`;
               searchResultsContainer.appendChild(li);
               const p = document.createElement("p");
-              p.textContent =`${topic.type}`;
+              p.textContent =`Type:${topic.type}`;
               searchResultsContainer.appendChild(p);
           });
       }
   }
     
 
-  async function subcription () {
-    const searchButtons = document.querySelectorAll("#button-private");
+  async function privateSubcription () {
+    const searchButtons = document.querySelector("#button-private");
     const secretIdInput = document.getElementById("secret-id");
-    const topicNameInput = document.getElementById("topic-name");
     const searchResults = document.createElement("ul");
-    searchResults.id = "search-re";
+    searchResults.id = "search-results";
+    searchResults.className = "private-results"
     document.getElementById("subscribe-topic").appendChild(searchResults);
-
-    searchButtons.forEach(button => {
-        button.addEventListener("click", async function () {
-            const inputField = this.previousElementSibling;
+    searchResults.style.display = "none"
+    searchButtons.addEventListener("click", async function () {
+            const inputField = secretIdInput;
             const searchValue = inputField.value.trim();
             
             if (!searchValue) {
@@ -262,7 +260,7 @@ function initUserPage() {
 
             try {
               const token = localStorage.getItem('authToken');
-              console.log(token)
+           
               if (!token) return console.error("No token found.");
 
 
@@ -276,38 +274,46 @@ function initUserPage() {
                 });
 
                 const data = await response.json();
+                console.log(searchValue)
                 
                 if (!response.ok) {
                     throw new Error(data.message || "Failed to retrieve topics.");
                 }
 
-                displaySearchResults(data.topics);
+                else if (!data.topic || typeof data.topic !== "object") {
+                  console.error("No valid topic found in response:", data);
+                  alert("No topic found.");
+                  return;
+              }
+             
+              displaySearchResults(data.topic);
+              
             } catch (error) {
                 console.error("Search error:", error);
                 alert(error.message);
             }
         });
-    });
+    
 
-    function displaySearchResults(topics) {
-        searchResults.innerHTML = ""; // Clear previous results
-        if (topics.length === 0) {
-            searchResults.innerHTML = "<li>No topics found.</li>";
-            return;
-        }
-
-        topics.forEach(topic => {
-          const searchResultsContainer = document.createElement("ul");
-          searchResultsContainer.id = "search-results";
-          document.getElementById("subscribe-topic").appendChild(searchResultsContainer);
-            const li = document.createElement("li");
-            li.textContent = `${topic.name}`;
-            searchResultsContainer.appendChild(li);
-            const p = document.createElement("p");
-            p.textContent =`${topic.type}`;
-            searchResultsContainer.appendChild(p);
-        });
-    }
+        function displaySearchResults(topic) {
+          searchResults.innerHTML = ""; // Clear previous results
+        
+          
+          if (!topic || typeof topic !== "object") {
+              console.error("Invalid topic data:", topic);
+              searchResults.innerHTML = "<li>No topic found.</li>";
+              return;
+          }
+          searchResults.style.display = "flex"
+          const li = document.createElement("li");
+          li.textContent = `Topic: ${topic.name}`;
+          searchResults.appendChild(li);
+      
+          const p = document.createElement("p");
+          p.textContent = `Type: ${topic.type}`;
+          searchResults.appendChild(p);
+      }
+      
   }
   }
   
