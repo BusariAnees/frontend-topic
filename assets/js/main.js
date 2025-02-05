@@ -14,13 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         dynamicContent.innerHTML = data;
 
-             // Save the last visited page in localStorage
-      localStorage.setItem("lastPage", url);
-  
+        //  Save the last visited page
+        localStorage.setItem("lastPage", url);
+
+        //  Load user.js if user.html is visited
         if (url.includes("user.html")) {
-          loadUserScript(); // Load the user.js script dynamically
+          loadUserScript();
         }
-  
+
         initEventListeners();
       })
       .catch((error) => {
@@ -29,19 +30,22 @@ document.addEventListener("DOMContentLoaded", function () {
           "<p>Failed to load content. Please try again later.</p>";
       });
   }
-  
-  // Function to load user.js dynamically
+
+  //  Function to load user.js dynamically
   function loadUserScript() {
     const script = document.createElement("script");
-    script.src = "/assets/js/users.js"; // Update with the correct path
+    script.src = "/assets/js/users.js"; // Ensure the correct path
     script.onload = () => {
-      initUserPage(); // Now it's available
+      if (typeof initUserPage === "function") {
+        initUserPage(); // Call user.js function
+      }
     };
     document.body.appendChild(script);
   }
-  
 
-  loadPage("components/auth/signup.html");
+  //  Load last visited page or default to signup.html
+  const lastPage = localStorage.getItem("lastPage") || "components/auth/signup.html";
+  loadPage(lastPage);
 
   document.addEventListener("click", function (event) {
     if (event.target.id === "login") {
@@ -53,9 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
       loadPage("components/auth/signup.html");
     }
-
-
-    
   });
 
   function initEventListeners() {

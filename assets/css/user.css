@@ -203,16 +203,36 @@ label {
     width: 80%;
 }
 
-#search-results {
+.topic-item {
     background: #cecfd1;
     display: flex;
     align-items: center;
     border: 1px solid #0000005c;
     border-radius: 2px;
     padding: 0.6rem;
-    height: 2.8rem;
+    height: auto; /* Allow flexible height */
     justify-content: space-between;
     list-style: none;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    gap: 1rem; /* Space between elements */
+    flex-wrap: wrap; /* Prevents overflow */
 }
 
+.topic-item p {
+    margin: 0; /* Remove default margins */
+}
+
+.join-topic-btn {
+    padding: 0.4rem 1rem;
+    background-color: #055fc3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.join-topic-btn:hover {
+    background-color: #0056b3;
+}
