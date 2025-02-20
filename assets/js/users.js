@@ -25,89 +25,6 @@ function initUserPage() {
       });
     });
   
-    async function getUserData() {
-      try {
-        const token = localStorage.getItem('authToken');
-        if (!token) return console.error("No token found.");
-  
-        const response = await fetch('http://localhost:5001/api/users/me', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-  
-        if (!response.ok) throw new Error('Failed to fetch user data');
-  
-        const data = await response.json();
-        console.log("User Data Fetched:", data);
-        return data;
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    }
-  
-    async function displayUserData() {
-      const userData = await getUserData();
-  
-      if (userData) {
-        document.getElementById("my-name").textContent = userData.fullName;
-        document.getElementById("name").textContent = userData.fullName.toUpperCase();
-        document.getElementById("name-editing").value = userData.fullName;
-        document.getElementById("email-editing").value = userData.email;
-        document.getElementById("topic").value = userData.subscribedTopics;
-      } else {
-        console.error("User data is null or undefined.");
-      }
-    }
-  
-    function addProfileUpdateListener() {
-      setTimeout(() => {
-        const container = document.getElementById("container-form");
-        if (!container) {
-          console.error("Form container not found.");
-          return;
-        }
-  
-        container.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const fullName = document.getElementById("name-editing").value;
-          const token = localStorage.getItem('authToken');
-  
-          if (!token) {
-            console.error("No token found.");
-            return;
-          }
-  
-          try {
-            const response = await fetch('http://localhost:5001/api/users/me', {
-              method: 'PUT',
-              headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ fullName }),
-            });
-  
-            const data = await response.json();
-            console.log("Update Response:", data);
-  
-            if (response.ok) {
-              loadPage("components/user/user.html");
-            } else {
-              const errorMessageElement = document.getElementById("error-message");
-              if (errorMessageElement) {
-                errorMessageElement.textContent = data.message || "Failed. Please try again.";
-              }
-            }
-          } catch (error) {
-            console.error("Error updating profile:", error);
-          }
-        });
-      }, 500);
-    }
- 
 
     async function initTopicForm() {
       const form = document.getElementById('topicForm');
@@ -378,6 +295,11 @@ async function joinTopic(topicId) {
 }
 
 
+document.getElementById("logout-div").addEventListener("click", function(){
+  localStorage.clear(),
+  loadPage("components/auth/login.html");
+})
 
-  }
+
+}
   

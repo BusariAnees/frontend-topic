@@ -14,10 +14,12 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         dynamicContent.innerHTML = data;
 
+      
+
         //  Save the last visited page
         localStorage.setItem("lastPage", url);
 
-        //  Load user.js if user.html is visited
+        // //  Load user.js if user.html is visited
         if (url.includes("user.html")) {
           loadUserScript();
         }
@@ -33,16 +35,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //  Function to load user.js dynamically
   function loadUserScript() {
-    const script = document.createElement("script");
-    script.src = "/assets/js/users.js"; // Ensure the correct path
-    script.onload = () => {
-      if (typeof initUserPage === "function") {
-        initUserPage(); // Call user.js function
-      }
-    };
-    document.body.appendChild(script);
-  }
+    const scripts = [
+      "/assets/js/user-data.js",
+      "/assets/js/profile-update.js",
+      "/assets/js/users.js",
 
+    ];
+  
+    let loadedScripts = 0;
+  
+    function onScriptLoad() {
+      loadedScripts++;
+      if (loadedScripts === scripts.length) {
+        // All scripts loaded, now initialize the page
+        if (typeof initUserPage === "function") {
+          initUserPage();
+        }
+      }
+    }
+  
+    scripts.forEach((src) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.defer = true;
+      script.onload = onScriptLoad;
+      document.body.appendChild(script);
+    });
+  }
+  
   //  Load last visited page or default to signup.html
   const lastPage = localStorage.getItem("lastPage") || "components/auth/signup.html";
   loadPage(lastPage);
@@ -151,5 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
-});
 
+window.loadPage = loadPage;
+});
