@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const scripts = [
       "/assets/js/user-data.js",
       "/assets/js/profile-update.js",
+      "/assets/js/subscribed-topics.js",
       "/assets/js/users.js",
 
     ];

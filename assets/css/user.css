@@ -236,3 +236,8 @@ label {
 .join-topic-btn:hover {
     background-color: #0056b3;
 }
+
+.detail-nav {
+    color: #055fc3 !important;
+    text-decoration: underline !important;
+}
