@@ -4,6 +4,8 @@ function initUserPage() {
     initTopicForm();
     subscription ();
     privateSubcription ();
+    getMyTopics();
+   
   
 
     //public and private results container available globally

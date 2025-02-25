@@ -122,6 +122,7 @@ article{
 }
 
 .article-li {
+    margin-block: 0.5rem;
     background: #cecfd1;
     display: flex;
     align-items: center;
