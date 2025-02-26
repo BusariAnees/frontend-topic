@@ -1,12 +1,3 @@
-function initUserPage() {
-    displayUserData();
-    addProfileUpdateListener();
-    initTopicForm();
-    subscription ();
-    privateSubcription ();
-    getMyTopics();
-   
-  
 
     //public and private results container available globally
     const searchResults = document.createElement("ul");
@@ -17,7 +8,10 @@ function initUserPage() {
     function setupNavigation() {
       const links = document.querySelectorAll(".nav-link");
       const sections = document.querySelectorAll(".content-section");
-  
+      const inbox = document.querySelector("#inbox");
+
+      inbox.classList.add("active");
+
       links.forEach(link => {
           link.addEventListener("click", (e) => {
               e.preventDefault();
@@ -30,7 +24,18 @@ function initUserPage() {
   // Call this function again after appending new elements
   setupNavigation();
   
+  window.setupNavigation = setupNavigation;
+
+function initUserPage() {
+    displayUserData();
+    addProfileUpdateListener();
+    initTopicForm();
+    subscription ();
+    privateSubcription ();
+    getMyTopics();
+    getSubscribedTopics();
   
+
 
     async function initTopicForm() {
       const form = document.getElementById('topicForm');
@@ -50,7 +55,7 @@ function initUserPage() {
         const type = typeInput.value.trim(); // Get value from the hidden input
         const secretId = type === 'private' ? secretIdInput.value.trim() : null;
      
-        console.log(secretId)
+      
         if (!name || !type) {
           responseMessage.innerText = 'Name and Type are required.';
           return;
@@ -83,6 +88,7 @@ function initUserPage() {
           form.reset(); // Clear form on success
           typeInput.value = ''; // Reset type
           secretIdContainer.style.display = 'none'; // Hide Secret ID field
+  
         } catch (error) {
           responseMessage.innerText = `Error: ${error.message}`;
           responseMessage.style.color = 'red';
@@ -179,7 +185,7 @@ function initUserPage() {
                 });
 
                 const data = await response.json();
-                console.log(searchValue)
+          
                 
                 if (!response.ok) {
                     throw new Error(data.message || "Failed to retrieve topics.");
@@ -269,6 +275,7 @@ function initUserPage() {
 
     // Re-run navigation setup to recognize new sections
     setupNavigation();
+   
 }
 
 
@@ -312,8 +319,8 @@ async function joinTopic(topicId) {
       if (!response.ok) {
           throw new Error(data.message || "Failed to join topic.");
       }
-      console.log(localStorage.setItem("id", data.topic._id));
-      console.log("Joined Topic:", data.topic);
+
+    
       successMessage.textContent = data.message;
       successMessage.style.color = "green";
   } catch (error) {
@@ -328,6 +335,18 @@ document.getElementById("logout-div").addEventListener("click", function(){
   localStorage.clear(),
   loadPage("components/auth/login.html");
 })
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

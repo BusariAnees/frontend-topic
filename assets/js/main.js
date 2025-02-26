@@ -1,4 +1,7 @@
 
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
   
   const dynamicContent = document.getElementById("dynamic-content");
@@ -39,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "/assets/js/user-data.js",
       "/assets/js/profile-update.js",
       "/assets/js/subscribed-topics.js",
+      "/assets/js/sub-details.js",
       "/assets/js/users.js",
 
     ];

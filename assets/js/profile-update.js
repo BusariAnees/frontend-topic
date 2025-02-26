@@ -27,7 +27,7 @@ function addProfileUpdateListener() {
           });
 
           const data = await response.json();
-          console.log("Update Response:", data);
+        
 
           if (response.ok) {
             loadPage("components/user/user.html");

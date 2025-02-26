@@ -9,43 +9,49 @@
 <script src="/assets/js/profile-update.js" defer></script>
 <script src="/assets/js/join-topic.js" defer ></script>
 <script src="/assets/js/subscribed-topics.js" defer></script>
+<script src="/assets/js/subscribed-details.js" defer></script>
 <script src="/assets/js/users.js" defer></script>
 
 
 <main>
   <div id="main-header">Topic Management</div>
-  <h1 id="main-h1">Actions</h1>
+  <!-- <h1 id="main-h1">Actions</h1> -->
   <section class="section">
     <ul class="section-ul">
-      <div class="section-div">
+   
+      <div class="section-div Inbox-div">
         <i class="fa-solid fa-hand-point-right"></i>
-        <a class="nav-link" href="#" data-target="inbox">Inbox</a>
+        <a class="nav-link side-link" href="#" data-target="inbox">Inbox</a>
       </div>
       <!-- <div class="section-div">
 <i class="fa-solid fa-hand-point-right"></i><a class="nav-link" href="#" data-target="main-topic">Main</a>
             </div> -->
       <div class="section-div">
         <i class="fa-solid fa-hand-point-right"></i>
-        <a class="nav-link" href="#" data-target="manage-topic"
+        <a class="nav-link side-link" href="#" data-target="manage-topic"
           >Manage Topics</a
         >
       </div>
 
       <div class="section-div">
         <i class="fa-solid fa-hand-point-right"></i>
-        <a class="nav-link" href="#" data-target="message-sub">Subscriptions</a>
+        <a class="nav-link side-link" href="#" data-target="message-sub">Subscriptions</a>
       </div>
 
       <div id="logout-div">
         <i class="fa-solid fa-hand-point-right"></i>
-        <a  href="#" >Logout</a>
+        <a  class="side-link" href="#" >Logout</a>
       </div>
-      <div class="name-edit">
-        <p id="my-name"></p>
-        <a class="nav-link" data-target="edit-section" href="#"
-          ><i class="fa-solid fa-pen-to-square"></i
-        ></a>
+      <div class="profile">
+        <i class="fa-regular fa-user"></i>
+        <div class="name-edit">
+          <p id="my-name"></p>
+          <a class="nav-link side-link" data-target="edit-section" href="#"
+            ><i class="fa-solid fa-pen-to-square"></i
+          ></a>
+        </div>
       </div>
+
     </ul>
     <ul class="welcome-ul">
       <p id="the-topics"><span id="name"></span>'S TOPICS</p>
@@ -64,7 +70,7 @@
             >Create Topic</a
           >
         </span>
-        <ul class="article-ul">
+        <ul class="article-ul manage-article">
         </ul>
 
       </article>
@@ -74,11 +80,8 @@
           <a class="nav-link topic-link" data-target="subscribe-topic" href="#"
             >Subscribe to Topic</a>
         </span>
-        <ul class="article-ul">
-          <li class="article-li">
-            <p>subcriptions</p>
-            <div class="article-date">21/01/2024</div>
-          </li>
+        <ul class="article-ul sub-article">
+         
         </ul>
       </article>
       <article id="inbox" class="content-section">

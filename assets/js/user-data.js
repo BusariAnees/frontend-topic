@@ -14,7 +14,7 @@ async function getUserData() {
       if (!response.ok) throw new Error('Failed to fetch user data');
 
       const data = await response.json();
-      console.log("User Data Fetched:", data);
+
       return data;
     } catch (error) {
       console.error('Error fetching user data:', error);
