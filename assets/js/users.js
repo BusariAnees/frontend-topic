@@ -1,25 +1,25 @@
 
-    //public and private results container available globally
-    const searchResults = document.createElement("ul");
-    searchResults.id = "search-re";
-    document.getElementById("subscribe-topic").appendChild(searchResults);
+function setupNavigation() {
+  const links = document.querySelectorAll(".nav-link");
+  const sections = document.querySelectorAll(".content-section");
+  const inbox = document.querySelector("#inbox");
 
-  
-    function setupNavigation() {
-      const links = document.querySelectorAll(".nav-link");
-      const sections = document.querySelectorAll(".content-section");
-      const inbox = document.querySelector("#inbox");
+  // Check if any section is already active
+  const anyActiveSection = Array.from(sections).some(section => section.classList.contains("active"));
 
-      inbox.classList.add("active");
-
-      links.forEach(link => {
-          link.addEventListener("click", (e) => {
-              e.preventDefault();
-              sections.forEach(section => section.classList.remove("active"));
-              document.getElementById(link.getAttribute("data-target"))?.classList.add("active");
-          });
-      });
+  if (!anyActiveSection) {
+      inbox.classList.add("active"); // Set inbox as active only if nothing else is
   }
+
+  links.forEach(link => {
+      link.addEventListener("click", (e) => {
+          e.preventDefault();
+          sections.forEach(section => section.classList.remove("active"));
+          document.getElementById(link.getAttribute("data-target"))?.classList.add("active");
+      });
+  });
+}
+
   
   // Call this function again after appending new elements
   setupNavigation();
@@ -35,6 +35,13 @@ function initUserPage() {
     getMyTopics();
     getSubscribedTopics();
   
+
+
+ //public and private results container available globally
+ const searchResults = document.createElement("ul");
+ searchResults.id = "search-re";
+ document.getElementById("subscribe-topic").appendChild(searchResults);
+
 
 
     async function initTopicForm() {
@@ -158,6 +165,7 @@ function initUserPage() {
     
 
   async function privateSubcription () {
+
     const searchButtons = document.querySelector("#button-private");
     const secretIdInput = document.getElementById("secret-id");
     searchButtons.addEventListener("click", async function () {
@@ -214,6 +222,10 @@ function initUserPage() {
  
 
   function displaySearchResults(topics) {
+
+
+
+
     if (!searchResults) {
         console.error("Search results container not found.");
         return;
@@ -335,14 +347,6 @@ document.getElementById("logout-div").addEventListener("click", function(){
   localStorage.clear(),
   loadPage("components/auth/login.html");
 })
-
-
-
-
-
-
-
-
 
 
 

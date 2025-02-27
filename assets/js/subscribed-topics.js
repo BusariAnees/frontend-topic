@@ -100,7 +100,7 @@ async function getMyTopics() {
     // myListedTopics(data);
 
   await   fetchTopics(data);
-   await  Unsubscribe(data);
+  //  await  Unsubscribe(data);
   } catch (error) {
     console.error("Find error:", error.message);
   }
@@ -189,8 +189,6 @@ async function fetchTopics(response) {
         <label for="description">Description:</label>
         <input type="text" id="description" value=${topic.description}  readonly><br><br>
     
-        <label for="creator">Created by (Email):</label>
-        <input type="text" id="creator" value=${topic.creator.email} readonly><br><br>
     
     
         <label for="subscribers">Subscribers:</label>
@@ -229,33 +227,3 @@ async function fetchTopics(response) {
 
 
 
-
-async function Unsubscribe(data) {
-  try {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      console.log("No token found");
-      return;
-    }
-
-    
-
-    const response = await fetch("http://localhost:5001/api/topics/unsubscribe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-      body: JSON.stringify({ topicId: data._id }) // Ensure correct payload
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error ${response.status} - ${response.statusText}`);
-    }
-
-    const responseData = await response.json();
-    console.log("Unsubscribe successful:", responseData);
-  } catch (error) {
-    console.error("Find error:", error.message);
-  }
-}

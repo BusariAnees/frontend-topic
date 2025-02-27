@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
               const userData = await userResponse.json();
               localStorage.setItem("userData", JSON.stringify(userData));
         
-              // Add a slight delay for smooth transition
+              // Added a slight delay for smooth transition
               setTimeout(() => {
                 document.getElementById("loading").style.display = "none";
                 loadPage("components/user/user.html");

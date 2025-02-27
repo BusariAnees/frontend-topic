@@ -173,8 +173,13 @@ article{
 .article-div a {
     margin-left: 17rem;
     font-size: 0.79rem;
-     text-align: center;
+    text-align: center;
     border-bottom: 1px solid #00000045;
+}
+
+.trash-button {
+    margin-left: 0 !important;
+    border: none !important;
 }
 
 .article-date {
@@ -243,6 +248,12 @@ label {
     height: 100%;
 }
 
+.divI {
+    display: flex;
+        justify-content: space-between;
+        margin-top: 0.44rem;
+}
+
 
 
 #search-ul input {
@@ -286,3 +297,5 @@ label {
 .detail-nav {
     text-decoration: underline !important;
 }
+
+

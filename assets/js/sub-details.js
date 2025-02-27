@@ -89,7 +89,17 @@ async function fetchSubcribedTopics(response) {
           Detaildiv.classList.add("nav-link");
           Detaildiv.setAttribute("data-topic-id", topic._id);
           Detaildiv.setAttribute("data-target", `topic-description-${topic._id}`);
-  
+          const divI = document.createElement("div");
+          divI.classList.add("divI");
+          const trashButton = document.createElement("a");
+          trashButton.classList.add("trash-button")
+         const icon = document.createElement("i");
+         icon.classList.add("fa-solid", "fa-trash");
+         trashButton.setAttribute("data-topic-id", topic._id);
+      
+
+
+
   
           paragraph.textContent = topic.name; // Set the topic name
           div.textContent = formattedDate;
@@ -124,13 +134,20 @@ async function fetchSubcribedTopics(response) {
           article.appendChild(paragraph);
           article.appendChild(div);
           articleDiv.appendChild(article);
-          articleDiv.appendChild(Detaildiv);
+         divI.appendChild(Detaildiv);
+          trashButton.appendChild(icon);
+          divI.appendChild(trashButton);
+          articleDiv.appendChild(divI);
           articleUl.appendChild(articleDiv); // Append <p> inside article
           articleManage.appendChild(articleUl);
-  
+        
+
+        
+
           // Append the details section to the main content area
           document.querySelector(".welcome-ul").appendChild( newSection);
   
+
         });
       } else {
         console.error("No topics found!");
@@ -138,11 +155,69 @@ async function fetchSubcribedTopics(response) {
     } catch (error) {
       console.error("Error fetching topics:", error);
     }
+    document.addEventListener("click", function (event) {
+        event.preventDefault();
+    
+        // Check if the clicked element or its parent is the trash button
+        const trashButton = event.target.closest(".trash-button");
+        if (trashButton) {
+            const topicId = trashButton.getAttribute("data-topic-id");
+            console.log("Unsubscribing from:", topicId);
+            if (topicId) {
+                Unsubscribe(topicId);
+            }
+        }
+    });
+    
       // Re-run navigation setup to recognize new sections
       setupNavigation();
   }
 
 
 
+
+async function Unsubscribe(data) {
+    const articleManage = document.querySelector('#message-sub');
+    const responseMessage = document.createElement("p");
+    responseMessage.id = "subcribed-message";
+    articleManage.appendChild(responseMessage); 
+
+
+
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        console.log("No token found");
+        return;
+      }
   
+      console.log(data);
+      
+  
+      const response = await fetch("http://localhost:5001/api/topics/unsubscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ topicId: data }) // Ensure correct payload
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error ${response.status} - ${response.statusText}`);
+      }
+  
+      const responseData = await response.json(); 
+      responseMessage.textContent = responseData.message || "Unsubscribed successfully";
+      responseMessage.style.color = "green";
+    } catch (error) {
+      console.error("Find error:", error.message);
+      responseMessage.textContent = responseData.message;
+      responseMessage.style.color = "red";
+    }
+  }
+
+
+
+
 
