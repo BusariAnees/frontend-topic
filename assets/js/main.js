@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "/assets/js/subscribed-topics.js",
       "/assets/js/sub-details.js",
       "/assets/js/users.js",
+      "/assets/js/notification.js",
 
     ];
   

@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
 }
 
 #auth-main {
@@ -22,10 +25,16 @@
     text-align: center;
     height: 23.5rem;
     width: 21rem;
+
 }
 
 .login-container h1{
     margin-bottom: 1rem;
+   
+}
+
+.login-container  p {
+    font-size: 0.8rem;
 }
 
 input {
@@ -57,6 +66,23 @@ input[type="number"] {
    
 }
 
+textarea{
+    white-space: pre-line;
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+}
+
+#signUpForm > p {
+    margin-top: 0.3rem;
+}
+
+#signInForm > p {
+    margin-top: 0.3rem;
+}
 
 
 button {

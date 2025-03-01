@@ -1,8 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-   height: 100%;
-   display: block;
+    background-color: #fffefe;
+    height: 100vh;
+    display: block;
+    background-image: url(../images/book-img.jpg);
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 10rem;
 }
 
 .fade-in {
@@ -23,7 +27,7 @@ main{
 #main-header {
 
     padding: 1rem 6rem;
-    background: #055fc3;
+    background: black;
     position: fixed;
     top: 0;
     left: 0;
@@ -55,6 +59,7 @@ main{
     border-bottom: 1px solid #0000005e;
     display: flex;
     margin-bottom: 1.5rem;
+    align-items: center;
 }
 
 .topic-link {
@@ -67,7 +72,7 @@ main{
 }
 
 .section a {
-   
+    font-size: 0.9rem;
     /* color: black; */
     text-decoration: none;
     transition: font-size 0.3s ease-in-out;
@@ -84,7 +89,7 @@ main{
 }
 
 .profile {
-    margin-top: 25rem;
+    margin-top: 24rem;
     display: flex;
 }
 
@@ -111,12 +116,9 @@ main{
 
 #the-topics{
     margin-top: 6rem;
-
-
     margin-bottom: 1rem;
     text-align: center;
     font-size: 1.3rem;
-    font-weight: 800;
 }
 
 .section-ul {
@@ -150,17 +152,17 @@ article{
 }
 
 .article-ul {
-    margin-block: 1.3rem;
+    margin-top: 1.3rem;
     list-style: none;
 }
 
 .article-div {
     margin-block: 0.5rem;
     background: #cecfd1;
-    border: 1px solid #0000005c;
-    border-radius: 2px;
+    border-radius: 10px;
     padding: 0.6rem;
     height: 3.5rem;
+    box-shadow: 1px 2px 2px #00000057;
 }
 
 .article-li {
@@ -169,13 +171,23 @@ article{
     justify-content: space-between;
 }
 
+.article-div div{
+    font-size: 0.9rem;
+}
+
 
 .article-div a {
+    
     margin-left: 17rem;
     font-size: 0.79rem;
     text-align: center;
     border-bottom: 1px solid #00000045;
 }
+
+.content-section a:hover {
+    font-size: 0.7rem;
+    color: black; /* Changes color to red */
+  }
 
 .trash-button {
     margin-left: 0 !important;
@@ -296,6 +308,34 @@ label {
 
 .detail-nav {
     text-decoration: underline !important;
+    font-family: auto;
 }
 
+#subscribed-users {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
 
+.subscribed-input {
+    width: 74% !important;
+}
+
+#subscribed-button {
+    padding: 0;
+    height: 33.5px;
+    width: 25% !important;
+}
+
+.topic-header {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-family: auto;
+}
+
+.subed-class ul{
+    margin-block: 0.4rem;
+    list-style: disc;
+}

@@ -11,7 +11,7 @@ async function getSubscribedTopics(){
          method: "GET",
          headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
          },
         });
         if (!response.ok) {
@@ -88,7 +88,7 @@ async function fetchSubcribedTopics(response) {
           Detaildiv.href = "#";
           Detaildiv.classList.add("nav-link");
           Detaildiv.setAttribute("data-topic-id", topic._id);
-          Detaildiv.setAttribute("data-target", `topic-description-${topic._id}`);
+          Detaildiv.setAttribute("data-target", `topic-description-${topic._id}sub-topic`);
           const divI = document.createElement("div");
           divI.classList.add("divI");
           const trashButton = document.createElement("a");
@@ -109,18 +109,22 @@ async function fetchSubcribedTopics(response) {
   
           // Create details section dynamically
           const newSection = document.createElement("article");
-          newSection.id = `topic-description-${topic._id}`;
+          newSection.id = `topic-description-${topic._id}sub-topic`;
           newSection.classList.add("content-section");
-          newSection.innerHTML = ` <form id="topicForm">
+          newSection.innerHTML = `
+          <p class= "topic-header">Subscribed Topic</p>
+          <form id="topicForm">
           <label for="name">Topic Name:</label>
           <input type="text" id="name" value=${topic.name} readonly><br><br>
       
           <label for="description">Description:</label>
-          <input type="text" id="description" value=${topic.description}  readonly><br><br>
-      
+          <textarea id="description" name="Description" cols="30" rows="10" readonly>
+          ${topic.description}
+        </textarea>
+
           <label for="subscribers">Subscribers:</label>
-          <input type="text" id="subscribers" value=${topic.__v} readonly><br><br>
-      
+          <input  type="text" id="subscribers" value=${topic.__v} readonly><br><br>
+         
           <label for="type">Type:</label>
           <input type="text" id="type"  value=${topic.type} readonly><br><br>
       
@@ -155,6 +159,12 @@ async function fetchSubcribedTopics(response) {
     } catch (error) {
       console.error("Error fetching topics:", error);
     }
+
+
+
+// getTopicSubscribers(response.topics[0]._id)
+
+
     document.addEventListener("click", function (event) {
         event.preventDefault();
     
@@ -218,6 +228,8 @@ async function Unsubscribe(data) {
   }
 
 
+
+ 
 
 
 
