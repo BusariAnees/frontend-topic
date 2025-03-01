@@ -32,10 +32,8 @@ function addProfileUpdateListener() {
           if (response.ok) {
             loadPage("components/user/user.html");
           } else {
-            const errorMessageElement = document.getElementById("error-message");
-            if (errorMessageElement) {
-              errorMessageElement.textContent = data.message || "Failed. Please try again.";
-            }
+          
+               showNotification(data.message, 'error');
           }
         } catch (error) {
           console.error("Error updating profile:", error);

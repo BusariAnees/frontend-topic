@@ -112,6 +112,11 @@ async function fetchSubcribedTopics(response) {
           newSection.id = `topic-description-${topic._id}sub-topic`;
           newSection.classList.add("content-section");
           newSection.innerHTML = `
+          <span class="topic-span">
+          <i class="fa-solid fa-arrow-left"></i>
+          <a class="nav-link topic-link" data-target="message-sub" href="#"
+            >back</a>
+        </span>
           <p class= "topic-header">Subscribed Topic</p>
           <form id="topicForm">
           <label for="name">Topic Name:</label>
@@ -179,7 +184,8 @@ async function fetchSubcribedTopics(response) {
         }
     });
     
-     
+      // Re-run navigation setup to recognize new sections
+      setupNavigation();
   }
 
 
@@ -217,12 +223,10 @@ async function Unsubscribe(data) {
       }
   
       const responseData = await response.json(); 
-      responseMessage.textContent = responseData.message || "Unsubscribed successfully";
-      responseMessage.style.color = "green";
+      showNotification(responseData.message , 'success');
+
     } catch (error) {
-      console.error("Find error:", error.message);
-      responseMessage.textContent = responseData.message;
-      responseMessage.style.color = "red";
+      showNotification(error.message, 'error');
     }
   }
 

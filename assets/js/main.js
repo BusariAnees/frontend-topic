@@ -1,5 +1,45 @@
 
 
+function showNotification(message, type = "success") {
+  const container = document.getElementById("notification-container");
+
+  let status;
+  if (type === "success") {
+    status = '<i class="fa-solid fa-circle-check notif-icon"></i>';
+  } else if (type === "error") {
+    status = '<i class="fa-solid fa-triangle-exclamation notif-icon"></i>';
+  } else if (type === "warning") {
+    status = '<i class="fa-solid fa-exclamation-triangle notif-icon"></i>';
+  } else if (type === "info") {
+    status = '<i class="fa-solid fa-info-circle notif-icon"></i>';
+  } else {
+    status = ""; // Default case if type is unknown
+  }
+
+
+  const notification = document.createElement("div");
+  notification.classList.add("notification", type);
+  notification.innerHTML = `
+  ${status}
+      <span>${message}</span>
+      <button  class="notif-error" onclick="this.parentElement.remove()">×</button>
+  `;
+
+  notification.style.animation = "fadeInOut 3s ease-in-out forwards";
+
+  container.appendChild(notification);
+
+  // Auto-remove after 3 seconds
+  setTimeout(() => {
+      notification.remove();
+      notification.innerHTML = "";
+  }, 3000);
+
+
+}
+
+window.showNotification = showNotification;
+
 
 
 document.addEventListener("DOMContentLoaded", function () {

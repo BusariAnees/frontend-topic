@@ -54,7 +54,11 @@ function getDetails(topicId, topicDetails) {
     });
   const details = document.getElementById(`topic-description-${topicId}`);
   details.innerHTML = ` 
-
+  <span class="topic-span">
+  <i class="fa-solid fa-arrow-left"></i>
+  <a class="nav-link topic-link" data-target="subscribe-topic" href="#"
+    >back</a>
+</span>
   <form id="topicForm">
      <label for="name">Topic Name:</label>
      <input type="text" id="name" value=${topicDetails.topic.name} readonly><br><br>
@@ -81,7 +85,8 @@ function getDetails(topicId, topicDetails) {
      <input type="text" id="updatedAt" value=${formattedUpdatedAt} readonly><br><br>
  </form>`;
 
- 
+     // Re-run navigation setup to recognize new sections
+     setupNavigation();
 }
 
 
@@ -191,6 +196,11 @@ async function fetchTopics(response) {
         newSection.id = `topic-description-${topic._id}manage-topic`;
         newSection.classList.add("content-section");
         newSection.innerHTML = ` 
+        <span class="topic-span">
+  <i class="fa-solid fa-arrow-left"></i>
+  <a class="nav-link topic-link" data-target="manage-topic" href="#"
+    >back</a>
+</span>
         <p class="topic-header">Managed Topic</p>
         <form id="topicForm">
         <label for="name">Topic Name:</label>

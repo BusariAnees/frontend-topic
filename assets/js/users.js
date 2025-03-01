@@ -1,4 +1,7 @@
 
+
+
+
 function setupNavigation() {
   const links = document.querySelectorAll(".nav-link");
   const sections = document.querySelectorAll(".content-section");
@@ -85,10 +88,19 @@ function initUserPage() {
     
           const data = await response.json();
     
+          if (!name || !type) {
+            showNotification('Name and Type are required.', 'error');
+            return;
+        }
+
           if (!response.ok) {
             throw new Error(data.message || 'Failed to create topic');
           }
          
+         
+
+        // Success message
+           showNotification('Topic created successfully!', 'success');
     
           responseMessage.innerText = 'Topic created successfully!';
           responseMessage.style.color = 'green';
@@ -100,6 +112,7 @@ function initUserPage() {
         } catch (error) {
           responseMessage.innerText = `Error: ${error.message}`;
           responseMessage.style.color = 'red';
+          showNotification(error.message, 'error');
         }
       });
     }
@@ -152,11 +165,11 @@ function initUserPage() {
                   if (!response.ok) {
                       throw new Error(data.message || "Failed to retrieve topics.");
                   }
-  
+                  
                   displaySearchResults(data.topics);
               } catch (error) {
                   console.error("Search error:", error);
-                  alert(error.message);
+                  showNotification(error.message, 'error');
               }
           });
       });
@@ -202,7 +215,8 @@ function initUserPage() {
 
                 else if (!data.topic || typeof data.topic !== "object") {
                   console.error("No valid topic found in response:", data);
-                  alert("No topic found.");
+                  showNotification("No valid topic found in response:", 'error');
+      
                   return;
               }
              
@@ -210,7 +224,7 @@ function initUserPage() {
               
             } catch (error) {
                 console.error("Search error:", error);
-                alert(error.message);
+                showNotification(error.message, 'error');
             }
         });
     
@@ -333,13 +347,14 @@ async function joinTopic(topicId) {
           throw new Error(data.message || "Failed to join topic.");
       }
 
-    
+      showNotification(data.message, 'success');
       successMessage.textContent = data.message;
       successMessage.style.color = "green";
   } catch (error) {
       console.error("Join error:", error.message);
       successMessage.textContent = error.message;
       successMessage.style.color = "red";
+      showNotification(error.message, 'error');
   }
 }
 

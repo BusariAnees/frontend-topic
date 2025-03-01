@@ -54,6 +54,9 @@
       </div>
 
     </ul>
+    <!-- error and success notification -->
+    <div id="notification-container"></div>
+
     <ul class="welcome-ul">
       <p id="the-topics"><span id="name"></span>'S TOPICS</p>
       <!-- <article id="main-topic" class="content-section">  
@@ -65,17 +68,23 @@
             </ul>
          </article> -->
       <article id="manage-topic" class="content-section">
-        <span class="topic-span">
-          <i class="fa-solid fa-arrow-right"></i>
-          <a class="nav-link topic-link" data-target="create-topic" href="#"
-            >Create Topic</a
-          >
-        </span>
+        <div>
+
+          <p class="topic-header topic">Manage Topics</p>
+          <span class="topic-span">
+            <i class="fa-solid fa-arrow-right"></i>
+            <a class="nav-link topic-link" data-target="create-topic" href="#"
+              >Create Topic</a
+            >
+          </span>
+        </div>
+      
         <ul class="article-ul manage-article">
         </ul>
 
       </article>
       <article id="message-sub" class="content-section">
+        <p class="topic-header topic">Subscriptions</p>
         <span class="topic-span">
           <i class="fa-solid fa-arrow-right"></i>
           <a class="nav-link topic-link" data-target="subscribe-topic" href="#"
@@ -134,6 +143,11 @@
 
       <!-- the edge navigation -->
       <article id="create-topic" class="content-section">
+        <span class="topic-span">
+          <i class="fa-solid fa-arrow-left"></i>
+          <a class="nav-link topic-link" data-target="manage-topic" href="#"
+            >back</a>
+        </span>
         <form id="topicForm">
           <div id="dropdown">
             <p id="topics-type">Topic's Type</p>
@@ -169,6 +183,11 @@
       </article>
 
       <article id="subscribe-topic" class="content-section">
+        <span class="topic-span">
+          <i class="fa-solid fa-arrow-left"></i>
+          <a class="nav-link topic-link" data-target="message-sub" href="#"
+            >back</a>
+        </span>
         <form id="topicForm">
           <div id="dropdown">
             <p id="topics-type">Search To Subscribe</p>
