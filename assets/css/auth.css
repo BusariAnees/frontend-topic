@@ -88,7 +88,7 @@ textarea{
 button {
     width: 100%;
     padding: 10px;
-    background-color: #055fc3;
+    background-color: #1b2436;
     color: white;
     border: none;
     border-radius: 4px;
@@ -96,7 +96,7 @@ button {
 }
 
 button:hover {
-    background-color:  #2785f1;
+    background-color:  #2f333c;
 }
 
 p {

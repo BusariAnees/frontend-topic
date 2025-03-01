@@ -179,8 +179,7 @@ async function fetchSubcribedTopics(response) {
         }
     });
     
-      // Re-run navigation setup to recognize new sections
-      setupNavigation();
+     
   }
 
 

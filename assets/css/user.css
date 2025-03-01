@@ -25,9 +25,8 @@ main{
 }
 
 #main-header {
-
+    background: linear-gradient(135deg, black, #1b2436, #7a7ade);
     padding: 1rem 6rem;
-    background: black;
     position: fixed;
     top: 0;
     left: 0;
@@ -62,10 +61,14 @@ main{
     align-items: center;
 }
 
+
+
 .topic-link {
     font-size: 0.85rem;
     border-bottom: 1px solid #00000052;
 }
+
+
 
 .side-link {
     color: white;
@@ -79,9 +82,13 @@ main{
 }
 
 .section a:hover {
-    color:#055fc3;
+    color:#7a7ade;
     font-size: 1.1rem;
    
+}
+
+.topic-span a{
+    font-size: 0.8rem;
 }
 
 .welcome-ul {
@@ -276,16 +283,17 @@ label {
     background: #cecfd1;
     display: flex;
     align-items: center;
-    border: 1px solid #0000005c;
+ border: none;
     border-radius: 2px;
     padding: 0.6rem;
-    height: auto; /* Allow flexible height */
+    height: auto;
     justify-content: space-between;
     list-style: none;
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
-    gap: 1rem; /* Space between elements */
-    flex-wrap: wrap; /* Prevents overflow */
+    gap: 1rem;
+    flex-wrap: wrap;
+    box-shadow: 1px 2px 2px #00000057;
 }
 
 .topic-item p {
@@ -294,7 +302,7 @@ label {
 
 .join-topic-btn {
     padding: 0.4rem 1rem;
-    background-color: #055fc3;
+    background-color:#1b2436;
     color: white;
     border: none;
     border-radius: 5px;
@@ -303,7 +311,7 @@ label {
 }
 
 .join-topic-btn:hover {
-    background-color: #0056b3;
+    background-color: #2f333c;
 }
 
 .detail-nav {
