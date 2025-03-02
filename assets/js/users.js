@@ -32,12 +32,13 @@ function setupNavigation() {
 function initUserPage() {
     displayUserData();
     addProfileUpdateListener();
+    fetchNotifications();
     initTopicForm();
     subscription ();
     privateSubcription ();
     getMyTopics();
     getSubscribedTopics();
-
+    
   
 
 
@@ -49,7 +50,7 @@ function initUserPage() {
 
 
     async function initTopicForm() {
-      const form = document.getElementById('topicForm');
+      const create = document.getElementById('create-button');
       const nameInput = document.getElementById('topic-name');
       const descriptionInput = document.getElementById('description');
       const typeInput = document.getElementById('type'); // Fix: Use the correct hidden input
@@ -58,7 +59,7 @@ function initUserPage() {
       const responseMessage = document.getElementById('responseMessage');
     
       // Handle form submission
-      form.addEventListener('submit', async function (event) {
+      create.addEventListener('click', async function (event) {
         event.preventDefault(); // Prevent page reload
     
         const name = nameInput.value.trim();
@@ -87,6 +88,7 @@ function initUserPage() {
           });
     
           const data = await response.json();
+          console.log("created new",data)
     
           if (!name || !type) {
             showNotification('Name and Type are required.', 'error');
@@ -105,7 +107,10 @@ function initUserPage() {
           responseMessage.innerText = 'Topic created successfully!';
           responseMessage.style.color = 'green';
     
-          form.reset(); // Clear form on success
+      
+          nameInput.value = "";
+          descriptionInput.value = "";
+          secretIdInput.value = "";
           typeInput.value = ''; // Reset type
           secretIdContainer.style.display = 'none'; // Hide Secret ID field
   
@@ -240,7 +245,6 @@ function initUserPage() {
 
 
 
-
     if (!searchResults) {
         console.error("Search results container not found.");
         return;
@@ -346,6 +350,8 @@ async function joinTopic(topicId) {
       if (!response.ok) {
           throw new Error(data.message || "Failed to join topic.");
       }
+
+      sendNotification(data);
 
       showNotification(data.message, 'success');
       successMessage.textContent = data.message;

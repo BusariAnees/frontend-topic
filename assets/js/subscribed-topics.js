@@ -249,22 +249,30 @@ async function fetchTopics(response) {
     console.error("Error fetching topics:", error);
   }
 
-  document.addEventListener("click", function(event){
-    event.preventDefault();
-  
+  document.addEventListener("click", function(event) {
     const subButton = event.target.closest("#subscribed-button");
-if (subButton) {
-    let subId = subButton.getAttribute("data-topic-id");
 
-    console.log("Raw subscribed users ID:", subId);
+    if (subButton) {
+        event.preventDefault(); // Prevent default only for this button
 
-    if (subId) {
-        // Removed "manage-topic" if it exists
-        subId = subId.replace("manage-topic", "");
-        getTopicSubscribers(subId);
+        let subId = subButton.getAttribute("data-topic-id");
+        console.log("Raw subscribed users ID:", subId);
+
+        if (subId) {
+            // Remove "manage-topic" if it exists in the ID
+            subId = subId.replace("manage-topic", "");
+            getTopicSubscribers(subId);
+        }
+
+        // Clear all elements with class "subed-class"
+        document.querySelectorAll(".subed-class").forEach(el => {
+            el.innerHTML = "";
+        });
+
+
     }
-}
-})
+});
+
     // Re-run navigation setup to recognize new sections
     setupNavigation();
 }
@@ -291,7 +299,8 @@ async function getTopicSubscribers(members) {
       }
 
       const data = await response.json();
-       displaySubscribers(data.subscribers, members)
+       displaySubscribers(data.subscribers, members);
+       sendNotification(data);
       console.log("Subscribers:", data);
   } catch (error) {
       console.error("Error:", error.message);
@@ -316,16 +325,21 @@ console.log(subscriberContainer)
   }
 
   const ul = document.createElement("ul"); // Create an unordered list
+  ul.id = "subed-list-ul"
 
  subscribers.forEach(sub => {
       const li = document.createElement('li');
-      console.log(sub.email)
+   
       li.textContent = sub.email; // Use correct property
       ul.appendChild(li);
+      
   });
   
-
-  console.log(subscriberContainer.appendChild(ul));
+  const subButton= document.createElement('button');
+  subButton.textContent = "Send Notification";
+  subButton.id = "subed-notification";
+  ul.appendChild(subButton);
+  subscriberContainer.appendChild(ul);
   subscriberContainer.style.display = "block"; 
  
 }

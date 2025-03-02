@@ -355,5 +355,18 @@ label {
 
 .subed-class ul{
     margin-block: 0.4rem;
-    list-style: disc;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1.5rem;
+    list-style: none;
+}
+
+
+.subed-class li {
+    border-bottom: 1px solid #ddd;
+}
+
+#subed-notification {
+    height: 2.5rem;
+    margin-top: 0.8rem;
 }
