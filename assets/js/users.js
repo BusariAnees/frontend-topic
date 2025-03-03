@@ -99,7 +99,7 @@ function initUserPage() {
             throw new Error(data.message || 'Failed to create topic');
           }
          
-         
+   
 
         // Success message
            showNotification('Topic created successfully!', 'success');
@@ -351,7 +351,7 @@ async function joinTopic(topicId) {
           throw new Error(data.message || "Failed to join topic.");
       }
 
-      sendNotification(data);
+
 
       showNotification(data.message, 'success');
       successMessage.textContent = data.message;

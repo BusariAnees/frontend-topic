@@ -111,8 +111,14 @@ async function getMyTopics() {
     }
     const data = await response.json();
     // myListedTopics(data);
+    
 
   await   fetchTopics(data);
+
+
+
+
+ 
   //  await  Unsubscribe(data);
   } catch (error) {
     console.error("Find error:", error.message);
@@ -148,6 +154,8 @@ async function fetchTopics(response) {
       }
 
       response.topics.forEach((topic) => {
+
+
         const createdAtDate = new Date(topic.createdAt);
         const updatedAtDate = new Date(topic.updatedAt);
         
@@ -240,6 +248,15 @@ async function fetchTopics(response) {
         // Append the details section to the main content area
         document.querySelector(".welcome-ul").appendChild( newSection);
 
+
+        Detaildiv.addEventListener("click", (event) => {
+          event.preventDefault(); // Prevent default link behavior
+          const topicId = event.target.getAttribute("data-topic-id");
+          console.log("Clicked topic ID:", topicId);
+      
+          sendNotification(topicId);
+        });
+
       });
     } else {
       console.error("No topics found!");
@@ -248,6 +265,10 @@ async function fetchTopics(response) {
   } catch (error) {
     console.error("Error fetching topics:", error);
   }
+
+
+ 
+
 
   document.addEventListener("click", function(event) {
     const subButton = event.target.closest("#subscribed-button");
@@ -270,11 +291,18 @@ async function fetchTopics(response) {
         });
 
 
+    } else {
+      return;
     }
 });
 
+
+
+
     // Re-run navigation setup to recognize new sections
     setupNavigation();
+
+  
 }
 
 async function getTopicSubscribers(members) {
@@ -300,7 +328,7 @@ async function getTopicSubscribers(members) {
 
       const data = await response.json();
        displaySubscribers(data.subscribers, members);
-       sendNotification(data);
+    
       console.log("Subscribers:", data);
   } catch (error) {
       console.error("Error:", error.message);
@@ -312,9 +340,7 @@ async function getTopicSubscribers(members) {
 
  function displaySubscribers(subscribers,topicId) {
   const subscriberContainer = document.querySelector(`#subed-users-${topicId}`);
-  if (subscriberContainer) {
-    console.log("Subed users clicked!", subscriberContainer);
-  }
+
 console.log(subscriberContainer)
 
   
@@ -324,8 +350,23 @@ console.log(subscriberContainer)
       return;
   }
 
-  const ul = document.createElement("ul"); // Create an unordered list
-  ul.id = "subed-list-ul"
+const ul = document.createElement("ul"); // Created an unordered list
+ul.id = "subed-list-ul";
+
+const firstInput = document.createElement('input'); // Created input
+firstInput.type = 'text';  // Set type correctly
+firstInput.classList.add('first-input'); // Added class
+firstInput.placeholder = "Your Title Here";
+
+const secondInput = document.createElement('input'); // Created input
+secondInput.type = 'text';  // Set type correctly
+secondInput.placeholder = "Enter Your Message Here"
+secondInput.classList.add('second-input'); // Added class
+
+ul.appendChild(firstInput); // Append inputs to UL
+ul.appendChild(secondInput);
+
+
 
  subscribers.forEach(sub => {
       const li = document.createElement('li');
@@ -335,13 +376,19 @@ console.log(subscriberContainer)
       
   });
   
+
+
   const subButton= document.createElement('button');
   subButton.textContent = "Send Notification";
   subButton.id = "subed-notification";
+
+  
+
   ul.appendChild(subButton);
   subscriberContainer.appendChild(ul);
+
   subscriberContainer.style.display = "block"; 
- 
+
 }
 
 

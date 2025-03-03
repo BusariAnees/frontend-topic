@@ -1,15 +1,22 @@
+
+
 function addProfileUpdateListener() {
     setTimeout(() => {
       const container = document.getElementById("container-form");
+     
       if (!container) {
         console.error("Form container not found.");
         return;
       }
 
+      
+
       container.addEventListener("submit", async (e) => {
         e.preventDefault();
         const fullName = document.getElementById("name-editing").value;
         const token = localStorage.getItem('authToken');
+
+ console.log(fullName)
 
         if (!token) {
           console.error("No token found.");

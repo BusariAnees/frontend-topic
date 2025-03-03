@@ -167,15 +167,17 @@ async function fetchSubcribedTopics(response) {
 
 
 
-// getTopicSubscribers(response.topics[0]._id)
+getTopicSubscribers(response.topics[0]._id)
 
 
     document.addEventListener("click", function (event) {
-        event.preventDefault();
+       
     
         // Check if the clicked element or its parent is the trash button
         const trashButton = event.target.closest(".trash-button");
         if (trashButton) {
+          event.preventDefault();
+
             const topicId = trashButton.getAttribute("data-topic-id");
             console.log("Unsubscribing from:", topicId);
             if (topicId) {
@@ -184,7 +186,7 @@ async function fetchSubcribedTopics(response) {
         }
     });
     
-      // Re-run navigation setup to recognize new sections
+//       Re-run navigation setup to recognize new sections
       setupNavigation();
   }
 
