@@ -78,19 +78,17 @@ async function fetchSubcribedTopics(response) {
             day: "numeric",
           });
   
-          const articleDiv = document.createElement("div");
-          articleDiv.classList.add("article-div");
+          const articleDiv = document.createElement("a");
+          articleDiv.classList.add("nav-link","article-div");
+          articleDiv.href = "#";
+          articleDiv.setAttribute("data-topic-id", topic._id);
+          articleDiv.setAttribute("data-target", `topic-description-${topic._id}sub-topic`);
           const article = document.createElement("li");
           article.classList.add("article-li");
           const paragraph = document.createElement("p"); // Create a new <p>
           const div = document.createElement("div");
-          const Detaildiv = document.createElement("a") 
-          Detaildiv.href = "#";
-          Detaildiv.classList.add("nav-link");
-          Detaildiv.setAttribute("data-topic-id", topic._id);
-          Detaildiv.setAttribute("data-target", `topic-description-${topic._id}sub-topic`);
           const divI = document.createElement("div");
-          divI.classList.add("divI");
+          divI.classList.add("divI", "topic-trash");
           const trashButton = document.createElement("a");
           trashButton.classList.add("trash-button")
          const icon = document.createElement("i");
@@ -103,7 +101,7 @@ async function fetchSubcribedTopics(response) {
   
           paragraph.textContent = topic.name; // Set the topic name
           div.textContent = formattedDate;
-          Detaildiv.textContent = "View Details"
+         
      
           
   
@@ -143,7 +141,6 @@ async function fetchSubcribedTopics(response) {
           article.appendChild(paragraph);
           article.appendChild(div);
           articleDiv.appendChild(article);
-         divI.appendChild(Detaildiv);
           trashButton.appendChild(icon);
           divI.appendChild(trashButton);
           articleDiv.appendChild(divI);

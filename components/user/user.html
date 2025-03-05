@@ -4,6 +4,7 @@
   rel="stylesheet"
 />
 <link rel="stylesheet" href="/assets/css/user.css" />
+<link rel="stylesheet" href="/assets/css/notification.css">
 
 <script src="/assets/js/user-data.js" defer></script>
 <script src="/assets/js/profile-update.js" defer></script>
@@ -11,7 +12,9 @@
 <script src="/assets/js/subscribed-topics.js" defer></script>
 <script src="/assets/js/subscribed-details.js" defer></script>
 <script src="/assets/js/notification.js" defer></script>
+<script src="/assets/js/notification-check.js" defer></script>
 <script src="/assets/js/users.js" defer></script>
+
 
 
 <main>
@@ -96,13 +99,64 @@
       </article>
       <article id="inbox" class="content-section">
         <p class="topic-header topic">Inbox</p>
-        
+        <span class="topic-span">
+          <i class="fa-solid fa-arrow-right"></i>
+          <a class="nav-link topic-link" data-target="sent-topic" href="#"
+            >Sent Topic's</a>
+        </span>
+
           <ul class="article-ul ">
             
           </ul>
+
+      
+      
        
    
       </article>
+
+
+
+
+      
+<!-- sent topics notifications -->
+
+
+<article id="sent-topic" class="content-section">
+  <p class="topic-header topic">Sent Notifications</p>
+ 
+    <span class="topic-span">
+      <i class="fa-solid fa-arrow-left"></i>
+      <a class="nav-link topic-link" data-target="inbox" href="#"
+        >back</a>
+    </span>
+ 
+
+
+  <ul class="article-ul ">
+            
+  </ul>
+</article>
+
+<!-- specific sent topic -->
+
+
+<article id="Specific-sent-topic" class="content-section">
+  <p class="topic-header topic">Specific Sent Notifications</p>
+
+    <span class="topic-span">
+      <i class="fa-solid fa-arrow-left"></i>
+      <a class="nav-link topic-link" data-target="inbox" href="#"
+        >back</a>
+    </span>
+
+  <ul class="article-ul ">
+            
+  </ul>
+</article>
+
+
+
       <!-- 
 //links to new page -->
       <article id="edit-section" class="content-section">

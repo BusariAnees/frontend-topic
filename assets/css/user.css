@@ -123,7 +123,7 @@ main{
 .topic-span {
     display: flex;
         align-items: center;
-        justify-content: end;
+      
 }
 
 
@@ -170,6 +170,9 @@ article{
 }
 
 .article-div {
+    width: 100%;
+    display: block;
+
     margin-block: 0.5rem;
     background: #cecfd1;
     border-radius: 10px;
@@ -283,6 +286,11 @@ label {
         margin-top: 0.44rem;
 }
 
+.topic-trash {
+    margin-top: 0.3rem;
+    margin-left: 38rem;
+}
+
 
 
 #search-ul input {
@@ -366,7 +374,3 @@ label {
     border-bottom: 1px solid #ddd;
 }
 
-#subed-notification {
-    height: 2.5rem;
-    margin-top: 0.8rem;
-}

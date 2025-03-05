@@ -1,0 +1,53 @@
+#subed-notification {
+    height: 2.5rem;
+    margin-top: 0.8rem;
+}
+
+.sent-div {
+    display: flex;
+ justify-content: space-between;
+align-items: center;
+} 
+
+#inbox-div {
+    display: flex;
+        justify-content: space-between;
+        align-items: anchor-center;
+}
+
+.article-div-notif {
+    width: 93%;
+}
+
+#read-div {
+    display: grid;
+        gap: 0.2rem;
+}
+
+.fa-check-double {
+    background: #cecfd1;
+    border-radius: 15px;
+    height: 1.7rem;
+    padding: 0.4rem;
+    width: 2rem;
+    margin: 0px;
+    text-align: center;
+}
+
+.fa-xmark {
+    background: #cecfd1;
+    border-radius: 15px;
+    height: 1.7rem;
+    padding: 0.4rem;
+    width: 2rem;
+    margin: 0px;
+    text-align: center;
+}
+
+#notif-messages {
+    text-align: center;
+}
+
+.notif-trash-button {
+    border-bottom: none !important;
+}

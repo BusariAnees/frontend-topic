@@ -33,11 +33,13 @@ function initUserPage() {
     displayUserData();
     addProfileUpdateListener();
     fetchNotifications();
+    fetchSentNotifications()
     initTopicForm();
     subscription ();
     privateSubcription ();
     getMyTopics();
     getSubscribedTopics();
+  
     
   
 

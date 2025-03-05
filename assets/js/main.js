@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "/assets/js/sub-details.js",
       "/assets/js/users.js",
       "/assets/js/notification.js",
+      "/assets/js/notification-check.js",
 
     ];
   

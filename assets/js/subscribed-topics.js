@@ -179,23 +179,25 @@ async function fetchTopics(response) {
           month: "numeric",
           day: "numeric",
         });
-
-        const articleDiv = document.createElement("div");
-        articleDiv.classList.add("article-div");
+        const articleDiv = document.createElement("a");
+        articleDiv.classList.add("nav-link","article-div");
+        articleDiv.href = "#";
+        articleDiv.setAttribute("data-topic-id", topic._id);
+        articleDiv.setAttribute("data-target", `topic-description-${topic._id}manage-topic`);
         const article = document.createElement("li");
         article.classList.add("article-li");
         const paragraph = document.createElement("p"); // Create a new <p>
         const div = document.createElement("div");
-        const Detaildiv = document.createElement("a") 
-        Detaildiv.href = "#";
-        Detaildiv.classList.add("nav-link");
-        Detaildiv.setAttribute("data-topic-id", topic._id);
-        Detaildiv.setAttribute("data-target", `topic-description-${topic._id}manage-topic`);
+        // const Detaildiv = document.createElement("a") 
+        // Detaildiv.href = "#";
+        // Detaildiv.classList.add("nav-link");
+        // Detaildiv.setAttribute("data-topic-id", topic._id);
+        // Detaildiv.setAttribute("data-target", `topic-description-${topic._id}manage-topic`);
 
 
         paragraph.textContent = topic.name; // Set the topic name
         div.textContent = formattedDate;
-        Detaildiv.textContent = "View Details"
+        // Detaildiv.textContent = "View Details"
    
         
 
@@ -240,7 +242,7 @@ async function fetchTopics(response) {
         article.appendChild(paragraph);
         article.appendChild(div);
         articleDiv.appendChild(article);
-        articleDiv.appendChild(Detaildiv);
+        // articleDiv.appendChild(Detaildiv);
         articleUl.appendChild(articleDiv); // Append <p> inside article
         articleManage.appendChild(articleUl);
 
@@ -249,7 +251,7 @@ async function fetchTopics(response) {
         document.querySelector(".welcome-ul").appendChild( newSection);
 
 
-        Detaildiv.addEventListener("click", (event) => {
+        articleDiv.addEventListener("click", (event) => {
           event.preventDefault(); // Prevent default link behavior
           const topicId = event.target.getAttribute("data-topic-id");
           console.log("Clicked topic ID:", topicId);
