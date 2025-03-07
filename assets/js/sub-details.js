@@ -78,11 +78,13 @@ async function fetchSubcribedTopics(response) {
             day: "numeric",
           });
   
-          const articleDiv = document.createElement("a");
-          articleDiv.classList.add("nav-link","article-div");
-          articleDiv.href = "#";
-          articleDiv.setAttribute("data-topic-id", topic._id);
-          articleDiv.setAttribute("data-target", `topic-description-${topic._id}sub-topic`);
+          const SubarticleDiv = document.createElement("div");
+          SubarticleDiv.classList.add("article-div");
+          const detailsTopic = document.createElement("a");
+          detailsTopic.classList.add("nav-link");
+          detailsTopic.href = "#";
+          detailsTopic.setAttribute("data-topic-id", topic._id);
+          detailsTopic.setAttribute("data-target", `topic-description-${topic._id}sub-topic`);
           const article = document.createElement("li");
           article.classList.add("article-li");
           const paragraph = document.createElement("p"); // Create a new <p>
@@ -101,7 +103,7 @@ async function fetchSubcribedTopics(response) {
   
           paragraph.textContent = topic.name; // Set the topic name
           div.textContent = formattedDate;
-         
+         detailsTopic.textContent = "View Details"
      
           
   
@@ -140,11 +142,12 @@ async function fetchSubcribedTopics(response) {
           
           article.appendChild(paragraph);
           article.appendChild(div);
-          articleDiv.appendChild(article);
+          SubarticleDiv.appendChild(article);
           trashButton.appendChild(icon);
+          divI.appendChild(detailsTopic);
           divI.appendChild(trashButton);
-          articleDiv.appendChild(divI);
-          articleUl.appendChild(articleDiv); // Append <p> inside article
+          SubarticleDiv.appendChild(divI);
+          articleUl.appendChild(SubarticleDiv); // Append <p> inside article
           articleManage.appendChild(articleUl);
         
 
@@ -223,6 +226,13 @@ async function Unsubscribe(data) {
   
       const responseData = await response.json(); 
       showNotification(responseData.message , 'success');
+
+    // ✅ Remove the deleted notification from the UI
+    const deletedNotification = document.querySelector(`[data-topic-id="${data}"]`);
+    console.log(deletedNotification);
+    if (deletedNotification) {
+      deletedNotification.parentElement.parentElement.remove(); // Removes the entire element from the list
+    }
 
     } catch (error) {
       showNotification(error.message, 'error');

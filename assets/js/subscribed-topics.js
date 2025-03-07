@@ -180,24 +180,21 @@ async function fetchTopics(response) {
           day: "numeric",
         });
         const articleDiv = document.createElement("a");
-        articleDiv.classList.add("nav-link","article-div");
-        articleDiv.href = "#";
-        articleDiv.setAttribute("data-topic-id", topic._id);
-        articleDiv.setAttribute("data-target", `topic-description-${topic._id}manage-topic`);
+        articleDiv.classList.add("article-div", "article-div-inc");
         const article = document.createElement("li");
         article.classList.add("article-li");
         const paragraph = document.createElement("p"); // Create a new <p>
         const div = document.createElement("div");
-        // const Detaildiv = document.createElement("a") 
-        // Detaildiv.href = "#";
-        // Detaildiv.classList.add("nav-link");
-        // Detaildiv.setAttribute("data-topic-id", topic._id);
-        // Detaildiv.setAttribute("data-target", `topic-description-${topic._id}manage-topic`);
+        const Detaildiv = document.createElement("a") 
+        Detaildiv.href = "#";
+        Detaildiv.classList.add("nav-link");
+        Detaildiv.setAttribute("data-topic-id", topic._id);
+        Detaildiv.setAttribute("data-target", `topic-description-${topic._id}manage-topic`);
 
 
         paragraph.textContent = topic.name; // Set the topic name
         div.textContent = formattedDate;
-        // Detaildiv.textContent = "View Details"
+        Detaildiv.textContent = "View Details"
    
         
 
@@ -242,7 +239,7 @@ async function fetchTopics(response) {
         article.appendChild(paragraph);
         article.appendChild(div);
         articleDiv.appendChild(article);
-        // articleDiv.appendChild(Detaildiv);
+        articleDiv.appendChild(Detaildiv);
         articleUl.appendChild(articleDiv); // Append <p> inside article
         articleManage.appendChild(articleUl);
 
@@ -251,13 +248,7 @@ async function fetchTopics(response) {
         document.querySelector(".welcome-ul").appendChild( newSection);
 
 
-        articleDiv.addEventListener("click", (event) => {
-          event.preventDefault(); // Prevent default link behavior
-          const topicId = event.target.getAttribute("data-topic-id");
-          console.log("Clicked topic ID:", topicId);
-      
-          sendNotification(topicId);
-        });
+    
 
       });
     } else {
@@ -267,23 +258,28 @@ async function fetchTopics(response) {
   } catch (error) {
     console.error("Error fetching topics:", error);
   }
+  document.addEventListener("click", function (event) {
+    // Handle topic clicks
+    const articleDiv = event.target.closest(".article-div-inc");
 
+    if (articleDiv) {
+        event.preventDefault();
+        const topicId = articleDiv.getAttribute("data-topic-id");
+        console.log("Clicked topic ID:", topicId);
+        sendNotification(topicId);
+    }
 
- 
-
-
-  document.addEventListener("click", function(event) {
+    // Handle subscribed button clicks
     const subButton = event.target.closest("#subscribed-button");
 
     if (subButton) {
-        event.preventDefault(); // Prevent default only for this button
+        event.preventDefault();
 
         let subId = subButton.getAttribute("data-topic-id");
         console.log("Raw subscribed users ID:", subId);
 
         if (subId) {
-            // Remove "manage-topic" if it exists in the ID
-            subId = subId.replace("manage-topic", "");
+            subId = subId.replace("manage-topic", ""); // Clean up ID if needed
             getTopicSubscribers(subId);
         }
 
@@ -291,12 +287,9 @@ async function fetchTopics(response) {
         document.querySelectorAll(".subed-class").forEach(el => {
             el.innerHTML = "";
         });
-
-
-    } else {
-      return;
     }
 });
+
 
 
 
