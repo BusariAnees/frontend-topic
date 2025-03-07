@@ -177,7 +177,7 @@ article{
     background: #cecfd1;
     border-radius: 10px;
     padding: 0.6rem;
-    height: 3.5rem;
+    height: 5rem;
     box-shadow: 1px 2px 2px #00000057;
 }
 
@@ -193,6 +193,7 @@ article{
 
 
 .article-div a {
+    margin-left: 16rem;
     font-size: 0.79rem;
     text-align: center;
     border-bottom: 1px solid #00000045;

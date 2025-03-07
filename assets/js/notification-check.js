@@ -1,5 +1,5 @@
-async function markAsRead() {
-    console.log("delete", data);
+async function markAsRead(data) {
+    console.log("read", data);
   
     try {
       const token = localStorage.getItem("authToken");
