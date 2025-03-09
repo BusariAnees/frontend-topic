@@ -1,63 +1,68 @@
+let isSendingNotification = false; // Prevents multiple simultaneous requests
+
 async function sendNotification(data) {
-  
-//   const sendNotificationBtn = document.getElementById("subed-notification")
-//   if (!sendNotificationBtn) {
-//     return console.log("empty");
-//   }
+  let isSendingNotification = false; // Prevents multiple notification clicks
 
   document.addEventListener("click", async function (event) {
-    const sendNotificationBtn = event.target.closest("#subed-notification");
-    
-     const firstInput = document.querySelector('.first-input');
-     const secondInput = document.querySelector('.second-input');
-
-     if (!firstInput || !secondInput) {
-      return; // Stop execution if inputs are missing
-    }
-     
-     const title = firstInput.value;
-     const message = secondInput.value
-
-
-    if (sendNotificationBtn) {
+      const sendNotificationBtn = event.target.closest("#subed-notification");
+  
+      if (!sendNotificationBtn) {
+          return;
+      }
+  
       event.preventDefault();
+  
+      if (isSendingNotification) {
+          console.log("Please wait! A notification is already being sent.");
+          return; // Stop extra clicks
+      }
+  
+      const firstInput = document.querySelector(".first-input");
+      const secondInput = document.querySelector(".second-input");
+  
+      if (!firstInput || !secondInput) {
+          console.log("Inputs missing");
+          return;
+      }
+  
+      const title = firstInput.value;
+      const message = secondInput.value;
+  
+      isSendingNotification = true; // Lock to prevent multiple clicks
       console.log("Send Notification button clicked!");
   
       try {
-        const token = localStorage.getItem("authToken");
+          const token = localStorage.getItem("authToken");
   
-        if (!token) {
-          return console.log("Token not found");
-        }
+          if (!token) {
+              console.log("Token not found");
+              return;
+          }
   
+          const response = await fetch("http://localhost:5001/api/notifications/send", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`,
+              },
+              body: JSON.stringify({ title: title, message: message }),
+          });
   
-        const response = await fetch("http://localhost:5001/api/notifications/send", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify({ title: title, message: message, topicId: data }),
-        });
+          if (!response.ok) {
+              throw new Error(`Error: ${response.status} - ${response.statusText}`);
+          }
   
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} - ${response.statusText}`);
-        }
-  
-        const responseData = await response.json();
-
-        
-        showNotification(responseData.message, 'success');
-
-       
+          const responseData = await response.json();
+          showNotification(responseData.message, "success");
       } catch (error) {
-        showNotification('Error sending notification.', 'error');
+          showNotification("Error sending notification.", "error");
+      } finally {
+          isSendingNotification = false; // Unlock as soon as request is done
       }
-    }
   });
-
   
 }
+
 
 
 
@@ -105,6 +110,7 @@ async function fetchNotifications() {
 
  
 notification.forEach(notification => {
+  console.log(notification)
 
 
 const createdDate = new Date(notification.createdAt).toLocaleString("en-US", {
@@ -128,10 +134,11 @@ div.classList.add('article-div', "article-div-notif");
 // div.setAttribute("data-topic-id", notification._id);
 // div.setAttribute("data-target", `topic-description-${notification._id}notification-topic`);
 const detailsTopic = document.createElement("a");
-detailsTopic.classList.add("nav-link");
+detailsTopic.classList.add("nav-link", "details-notif");
 detailsTopic.href = "#";
-detailsTopic.setAttribute("data-topic-id", topic._id);
-detailsTopic.setAttribute("data-target", `topic-description-${topic._id}sub-topic`);
+detailsTopic.setAttribute("data-topic-id", notification._id);
+detailsTopic.setAttribute("data-target", `topic-description-${notification._id}notification-topic`);
+
 
 
   // Create notification item
@@ -170,9 +177,18 @@ trashButton.setAttribute("data-topic-id", notification._id);
    const readDiv = document.createElement("div");
    readDiv.id = "read-div";
    const read = document.createElement("i")
-   read.classList.add("fa-solid", "fa-check-double");
+   read.classList.add("fa-solid", "fa-check-double","i-check");
+   read.setAttribute("data-topic-id", notification._id);
    const unread = document.createElement("i");
-   unread.classList.add("fa-solid", "fa-xmark");
+   unread.classList.add("fa-solid", "fa-xmark","i-uncheck");
+   unread.setAttribute("data-topic-id", notification._id);
+
+
+   if(notification.isRead){
+read.style.background = "green";
+   } else {
+    unread.style.background = "red"
+   }
 
 
 
@@ -203,41 +219,132 @@ trashButton.setAttribute("data-topic-id", notification._id);
 });
 
 
+let isFetchingNotification = false; // Prevents multiple rapid clicks
+
 document.addEventListener("click", function (event) {
+    const detailsTopic = event.target.closest(".details-notif");
 
+    if (!detailsTopic) {
+        return;
+    }
 
-  const divButton = event.target.closest(".article-div-notif");
-
-  if (divButton) {
     event.preventDefault();
 
-  const divId = divButton.getAttribute("data-topic-id");
-  console.log("Clicked topic ID:", divId);
-if(divId) {
-  fetchNotificationById(divId);
-}
-  }
+    if (isFetchingNotification) {
+        console.log("Please wait! A notification fetch is already in progress.");
+        return; // Prevent multiple clicks
+    }
+
+    const divId = detailsTopic.getAttribute("data-topic-id");
+    console.log("Clicked topic ID:", divId);
+
+    if (divId) {
+        isFetchingNotification = true; // Lock to prevent extra clicks
+
+        fetchNotificationById(divId)
+            .finally(() => {
+                isFetchingNotification = false; // Unlock after completion
+            });
+    }
 });
 
 
 
 
+let isMarkingAsRead = false; // Prevents multiple rapid clicks
+
 document.addEventListener("click", function (event) {
-       
-    
-  // Check if the clicked element or its parent is the trash button
-  const trashButton = event.target.closest(".notif-trash-button-Id");
-  if (trashButton) {
+    const read = event.target.closest(".i-check");
+
+    if (!read) {
+        return;
+    }
+
     event.preventDefault();
 
-      const topicId = trashButton.getAttribute("data-topic-id");
-      console.log("Unsubscribing from:", topicId);
-      if (topicId) {
-          deleteNotifInbox(topicId);
-      }
-  }
+    if (isMarkingAsRead) {
+        console.log("Please wait! A notification is already being marked as read.");
+        return; // Prevent multiple clicks
+    }
+
+    const divId = read.getAttribute("data-topic-id");
+    console.log("Clicked topic ID:", divId);
+
+    if (divId) {
+        isMarkingAsRead = true; // Lock to prevent extra clicks
+
+        markAsRead(divId)
+            .finally(() => {
+                isMarkingAsRead = false; // Unlock after completion
+            });
+    }
 });
-   
+
+
+
+let isMarkingAsUnread = false; // Prevents multiple rapid clicks
+
+document.addEventListener("click", function (event) {
+    const unread = event.target.closest(".i-uncheck");
+
+    if (!unread) {
+        return;
+    }
+
+    event.preventDefault();
+
+    if (isMarkingAsUnread) {
+        console.log("Please wait! A notification is already being marked as unread.");
+        return; // Prevent multiple clicks
+    }
+
+    const divId = unread.getAttribute("data-topic-id");
+    console.log("Clicked topic ID:", divId);
+
+    if (divId) {
+        isMarkingAsUnread = true; // Lock to prevent extra clicks
+
+        markAsUnRead(divId)
+            .finally(() => {
+                isMarkingAsUnread = false; // Unlock after completion
+            });
+    }
+});
+
+
+
+
+
+let isDeletingNotification = false; // Prevents multiple rapid clicks
+
+document.addEventListener("click", function (event) {
+    // Check if the clicked element or its parent is the trash button
+    const trashButton = event.target.closest(".notif-trash-button-Id");
+
+    if (!trashButton) {
+        return;
+    }
+
+    event.preventDefault();
+
+    if (isDeletingNotification) {
+        console.log("Please wait! A notification is already being deleted.");
+        return; // Prevent multiple clicks
+    }
+
+    const topicId = trashButton.getAttribute("data-topic-id");
+    console.log("Unsubscribing from:", topicId);
+
+    if (topicId) {
+        isDeletingNotification = true; // Lock to prevent extra clicks
+
+        deleteNotifInbox(topicId)
+            .finally(() => {
+                isDeletingNotification = false; // Unlock after completion
+            });
+    }
+});
+
     
 }
 
@@ -273,7 +380,7 @@ async function deleteNotifInbox(data) {
     const deletedNotification = document.querySelector(`[data-topic-id="${data}"]`);
     console.log(deletedNotification);
     if (deletedNotification) {
-      deletedNotification.parentElement.remove(); // Removes the entire element from the list
+      deletedNotification.parentElement.parentElement.parentElement.remove(); // Removes the entire element from the list
     }
   } catch (error) {
     showNotification(error.message, "error");
@@ -490,21 +597,36 @@ trashButton.setAttribute("data-topic-id", notification._id);
     });
        
     
-document.addEventListener("click", function (event) {
-       
-    
-  // Check if the clicked element or its parent is the trash button
-  const trashButton = event.target.closest(".notif-trash-button");
-  if (trashButton) {
-    event.preventDefault();
+    let isDeletingNotif = false; // Prevents multiple rapid clicks
 
-      const topicId = trashButton.getAttribute("data-topic-id");
-      console.log("Unsubscribing from:", topicId);
-      if (topicId) {
-          deleteNotif(topicId);
-      }
-  }
-});
+    document.addEventListener("click", function (event) {
+        // Check if the clicked element or its parent is the trash button
+        const trashButton = event.target.closest(".notif-trash-button");
+    
+        if (!trashButton) {
+            return;
+        }
+    
+        event.preventDefault();
+    
+        if (isDeletingNotif) {
+            console.log("Please wait! A notification is already being deleted.");
+            return; // Prevent multiple clicks
+        }
+    
+        const topicId = trashButton.getAttribute("data-topic-id");
+        console.log("Unsubscribing from:", topicId);
+    
+        if (topicId) {
+            isDeletingNotif = true; // Lock to prevent extra clicks
+    
+            deleteNotif(topicId)
+                .finally(() => {
+                    isDeletingNotif = false; // Unlock after completion
+                });
+        }
+    });
+    
       
 
 

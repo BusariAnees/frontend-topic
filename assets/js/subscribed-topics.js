@@ -187,7 +187,7 @@ async function fetchTopics(response) {
         const div = document.createElement("div");
         const Detaildiv = document.createElement("a") 
         Detaildiv.href = "#";
-        Detaildiv.classList.add("nav-link");
+        Detaildiv.classList.add("nav-link", "detail-manage");
         Detaildiv.setAttribute("data-topic-id", topic._id);
         Detaildiv.setAttribute("data-target", `topic-description-${topic._id}manage-topic`);
 
@@ -222,7 +222,7 @@ async function fetchTopics(response) {
         <label for="subscribers">Subscribers:</label>
          <div id="subscribed-users">
           <input class="subscribed-input" type="text" id="subscribers" value=${topic.__v} readonly><br><br>
-          <button id="subscribed-button" data-topic-id=${topic._id}>Subscribed Users</button>
+          <button id="subscribed-button" data-topic-id=${topic._id}>Send Notification</button>
         </div>
         <div class="subed-class" id="subed-users-${topic._id}"></div>
     
@@ -258,15 +258,33 @@ async function fetchTopics(response) {
   } catch (error) {
     console.error("Error fetching topics:", error);
   }
-  document.addEventListener("click", function (event) {
-    // Handle topic clicks
-    const articleDiv = event.target.closest(".article-div-inc");
+let isFetchingTopic = false;  // Flag for topic clicks
+let isFetchingSubscribers = false; // Flag for subscriber clicks
 
-    if (articleDiv) {
+document.addEventListener("click", function (event) {
+    // Handle topic clicks
+    const Detaildiv = event.target.closest(".detail-manage");
+
+    if (Detaildiv) {
         event.preventDefault();
-        const topicId = articleDiv.getAttribute("data-topic-id");
+
+        if (isFetchingTopic) {
+            console.log("Wait! A request for topic is already in progress.");
+            return; // Prevent multiple requests
+        }
+
+        isFetchingTopic = true; // Set flag to true
+
+        const topicId = Detaildiv.getAttribute("data-topic-id");
         console.log("Clicked topic ID:", topicId);
-        sendNotification(topicId);
+
+        if (topicId) {
+            sendNotification(topicId).finally(() => {
+                setTimeout(() => {
+                    isFetchingTopic = false; // Reset flag after delay
+                }, 2000); // 2s cooldown before next click
+            });
+        }
     }
 
     // Handle subscribed button clicks
@@ -275,12 +293,23 @@ async function fetchTopics(response) {
     if (subButton) {
         event.preventDefault();
 
+        if (isFetchingSubscribers) {
+            console.log("Wait! A request for subscribers is already in progress.");
+            return; // Prevent multiple requests
+        }
+
+        isFetchingSubscribers = true; // Set flag to true
+
         let subId = subButton.getAttribute("data-topic-id");
         console.log("Raw subscribed users ID:", subId);
 
         if (subId) {
             subId = subId.replace("manage-topic", ""); // Clean up ID if needed
-            getTopicSubscribers(subId);
+            getTopicSubscribers(subId).finally(() => {
+                setTimeout(() => {
+                    isFetchingSubscribers = false; // Reset flag after delay
+                }, 2000); // 2s cooldown before next click
+            });
         }
 
         // Clear all elements with class "subed-class"

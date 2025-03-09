@@ -1,5 +1,5 @@
 body {
-    background-color: #fffefe;
+    background-color:black;;
     height: 100vh;
     display: block;
     background-image: url(../images/book-img.jpg);
@@ -88,12 +88,13 @@ main{
 }
 
 .section a:hover {
-    color:#7a7ade;
+    color:#b6b6dd;
     font-size: 1.1rem;
    
 }
 
 .topic-span a{
+    color: white;
     font-size: 0.8rem;
 }
 
@@ -108,16 +109,24 @@ main{
 
 #my-name {
     margin-right: 3rem;
+    width: 70px; /* Set a fixed width */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add "..." at the end */
 }
 
 .name-edit {
-   
-
-
     display: flex;
     align-items: center;
     /* margin-top: 14rem; */
     justify-content: space-between;
+}
+
+.content-section p {
+    width: 15rem;; /* Set a fixed width */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add "..." at the end */
 }
 
 .topic-span {
@@ -132,6 +141,7 @@ main{
     margin-bottom: 1rem;
     text-align: center;
     font-size: 1.3rem;
+    color: white;
 }
 
 .section-ul {
@@ -152,11 +162,13 @@ main{
 }
 
 .section i{
+    color: white;
     margin-right: 8px;
 }
 
 article{
     border: 1px solid #0000002e;
+    background: black;
     border-radius: 5px;
     width: 45rem;
     height: 100%;
@@ -165,9 +177,14 @@ article{
 }
 
 .article-ul {
-    margin-top: 1.3rem;
+   
     list-style: none;
 }
+
+#inbox ul{
+    margin-top: 0.3rem;
+}
+
 
 .article-div {
     width: 100%;
@@ -177,8 +194,13 @@ article{
     background: #cecfd1;
     border-radius: 10px;
     padding: 0.6rem;
-    height: 5rem;
+    height: 3.5rem;
     box-shadow: 1px 2px 2px #00000057;
+}
+
+
+.article-div-notif {
+    height: 5rem;
 }
 
 .article-li {
@@ -193,7 +215,7 @@ article{
 
 
 .article-div a {
-    margin-left: 16rem;
+    margin-left: 17rem;
     font-size: 0.79rem;
     text-align: center;
     border-bottom: 1px solid #00000045;
@@ -201,7 +223,7 @@ article{
 
 .content-section a:hover {
     font-size: 0.7rem;
-    color: black; /* Changes color to red */
+    color: rgb(101, 98, 98); /* Changes color to red */
   }
 
 .topic {
@@ -259,9 +281,11 @@ p {
 
 label {
     font-size: 0.85rem;
+    color: white;
 }
 
 #topics-type {
+    color: white;
     margin: 5px;
     text-align: center;
     font-size: 0.9rem;
@@ -314,6 +338,7 @@ label {
 
 .topic-item p {
     margin: 0; /* Remove default margins */
+    width: initial !important;
 }
 
 .join-topic-btn {
@@ -327,7 +352,7 @@ label {
 }
 
 .join-topic-btn:hover {
-    background-color: #2f333c;
+    background-color: #57585b;
 }
 
 .detail-nav {
@@ -352,11 +377,13 @@ label {
 }
 
 .topic-header {
+    color: white;
     text-align: center;
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 1rem;
     font-family: auto;
+    width: initial !important;
 }
 
 .subed-class ul{
@@ -369,6 +396,7 @@ label {
 
 
 .subed-class li {
+    color: white;
     border-bottom: 1px solid #ddd;
 }
 

@@ -170,22 +170,36 @@ async function fetchSubcribedTopics(response) {
 getTopicSubscribers(response.topics[0]._id)
 
 
-    document.addEventListener("click", function (event) {
-       
-    
-        // Check if the clicked element or its parent is the trash button
-        const trashButton = event.target.closest(".trash-button");
-        if (trashButton) {
-          event.preventDefault();
+let isUnsubscribing = false; // Prevents multiple rapid clicks
 
-            const topicId = trashButton.getAttribute("data-topic-id");
-            console.log("Unsubscribing from:", topicId);
-            if (topicId) {
-                Unsubscribe(topicId);
-            }
-        }
-    });
-    
+document.addEventListener("click", function (event) {
+    // Check if the clicked element or its parent is the trash button
+    const trashButton = event.target.closest(".trash-button");
+
+    if (!trashButton) {
+        return;
+    }
+
+    event.preventDefault();
+
+    if (isUnsubscribing) {
+        console.log("Please wait! Already unsubscribing...");
+        return; // Prevent multiple clicks
+    }
+
+    const topicId = trashButton.getAttribute("data-topic-id");
+    console.log("Unsubscribing from:", topicId);
+
+    if (topicId) {
+        isUnsubscribing = true; // Lock to prevent extra clicks
+
+        Unsubscribe(topicId)
+            .finally(() => {
+                isUnsubscribing = false; // Unlock after completion
+            });
+    }
+});
+
 //       Re-run navigation setup to recognize new sections
       setupNavigation();
   }
