@@ -370,7 +370,7 @@ console.log(subscriberContainer)
   
 
   if (!Array.isArray(subscribers) || subscribers.length === 0) {
-      subscriberContainer.innerHTML += "<p>No subscribers yet.</p>";
+      subscriberContainer.innerHTML += "<p class=no-sub>No subscribers yet.</p>";
       return;
   }
 

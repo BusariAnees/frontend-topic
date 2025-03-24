@@ -400,3 +400,6 @@ label {
     border-bottom: 1px solid #ddd;
 }
 
+.no-sub {
+    color: white;
+}
