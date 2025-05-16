@@ -362,57 +362,48 @@ async function getTopicSubscribers(members) {
 }
 
 
- function displaySubscribers(subscribers,topicId) {
+function displaySubscribers(subscribers, topicId) {
   const subscriberContainer = document.querySelector(`#subed-users-${topicId}`);
 
-console.log(subscriberContainer)
+  if (!subscriberContainer) return;
 
-  
+  subscriberContainer.innerHTML = "";
 
   if (!Array.isArray(subscribers) || subscribers.length === 0) {
-      subscriberContainer.innerHTML += "<p class=no-sub>No subscribers yet.</p>";
-      return;
+    subscriberContainer.innerHTML = "<p class=no-sub>No subscribers yet.</p>";
+    return;
   }
 
-const ul = document.createElement("ul"); // Created an unordered list
-ul.id = "subed-list-ul";
+  const ul = document.createElement("ul");
+  ul.id = "subed-list-ul";
 
-const firstInput = document.createElement('input'); // Created input
-firstInput.type = 'text';  // Set type correctly
-firstInput.classList.add('first-input'); // Added class
-firstInput.placeholder = "Your Title Here";
+  const firstInput = document.createElement('input');
+  firstInput.type = 'text';
+  firstInput.classList.add('first-input');
+  firstInput.placeholder = "Your Title Here";
 
-const secondInput = document.createElement('input'); // Created input
-secondInput.type = 'text';  // Set type correctly
-secondInput.placeholder = "Enter Your Message Here"
-secondInput.classList.add('second-input'); // Added class
+  const secondInput = document.createElement('input');
+  secondInput.type = 'text';
+  secondInput.classList.add('second-input');
+  secondInput.placeholder = "Enter Your Message Here";
 
-ul.appendChild(firstInput); // Append inputs to UL
-ul.appendChild(secondInput);
+  ul.appendChild(firstInput);
+  ul.appendChild(secondInput);
 
-
-
- subscribers.forEach(sub => {
-      const li = document.createElement('li');
-   
-      li.textContent = sub.email; // Use correct property
-      ul.appendChild(li);
-      
+  subscribers.forEach(sub => {
+    const li = document.createElement('li');
+    li.textContent = sub.email;
+    ul.appendChild(li);
   });
-  
 
-
-  const subButton= document.createElement('button');
+  const subButton = document.createElement('button');
   subButton.textContent = "Send Notification";
   subButton.id = "subed-notification";
-
-  
+  subButton.setAttribute("data-topic-id", topicId);
 
   ul.appendChild(subButton);
   subscriberContainer.appendChild(ul);
-
-  subscriberContainer.style.display = "block"; 
-
+  subscriberContainer.style.display = "block";
 }
 
 

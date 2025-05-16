@@ -1,67 +1,66 @@
-let isSendingNotification = false; // Prevents multiple simultaneous requests
+let isSendingNotification = false; // Global lock variable
 
-async function sendNotification(data) {
-  let isSendingNotification = false; // Prevents multiple notification clicks
-
+function setupNotificationListener() {
   document.addEventListener("click", async function (event) {
-      const sendNotificationBtn = event.target.closest("#subed-notification");
-  
-      if (!sendNotificationBtn) {
-          return;
-      }
-  
-      event.preventDefault();
-  
-      if (isSendingNotification) {
-          console.log("Please wait! A notification is already being sent.");
-          return; // Stop extra clicks
-      }
-  
-      const firstInput = document.querySelector(".first-input");
-      const secondInput = document.querySelector(".second-input");
-  
-      if (!firstInput || !secondInput) {
-          console.log("Inputs missing");
-          return;
-      }
-  
-      const title = firstInput.value;
-      const message = secondInput.value;
-  
-      isSendingNotification = true; // Lock to prevent multiple clicks
-      console.log("Send Notification button clicked!");
-  
-      try {
-          const token = localStorage.getItem("authToken");
-  
-          if (!token) {
-              console.log("Token not found");
-              return;
-          }
-  
-          const response = await fetch("http://localhost:5001/api/notifications/send", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${token}`,
-              },
-              body: JSON.stringify({ title: title, message: message }),
-          });
-  
-          if (!response.ok) {
-              throw new Error(`Error: ${response.status} - ${response.statusText}`);
-          }
-  
-          const responseData = await response.json();
-          showNotification(responseData.message, "success");
-      } catch (error) {
-          showNotification("Error sending notification.", "error");
-      } finally {
-          isSendingNotification = false; // Unlock as soon as request is done
-      }
-  });
-  
+
+    const sendNotificationBtn = event.target.closest("#subed-notification"); 
+
+
+    if (!sendNotificationBtn) return;
+
+    event.preventDefault();
+
+    if (isSendingNotification) {
+        console.log("Please wait! A notification is already being sent.");
+        return;
+    }
+
+    const title = document.querySelector(".first-input")?.value.trim();
+    const message = document.querySelector(".second-input")?.value.trim();
+    const topicId = sendNotificationBtn.getAttribute("data-topic-id"); // ✅ now works
+
+    if (!title || !message || !topicId) {
+        console.log("Missing title, message, or topicId");
+        return;
+    }
+
+    isSendingNotification = true;
+
+    try {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            console.log("Token not found");
+            return;
+        }
+
+        const response = await fetch("http://localhost:5001/api/notifications/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({ title, message, topicId }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const responseData = await response.json();
+        showNotification(responseData.message, "success");
+    } catch (error) {
+        console.error("Notification error:", error);
+        showNotification("Error sending notification.", "error");
+    } finally {
+        isSendingNotification = false;
+    }
+});
 }
+
+// Call this once on page load
+setupNotificationListener();
+
+
 
 
 
